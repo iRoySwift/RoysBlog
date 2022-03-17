@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>Roy's Blog Blog</title>
-        <link>https://iRoySwift.github.io/RoysBlog/blog</link>
+        <link>https://iRoySwift.github.io/blog</link>
         <description>Roy's Blog Blog</description>
         <lastBuildDate>Sun, 21 Nov 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[文档搜索]]></title>
-            <link>https://iRoySwift.github.io/RoysBlog/blog/2021/11/21/algolia-docsearch-migration</link>
+            <link>https://iRoySwift.github.io/blog/2021/11/21/algolia-docsearch-migration</link>
             <guid>/2021/11/21/algolia-docsearch-migration</guid>
             <pubDate>Sun, 21 Nov 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[DocSearch 正在迁移到一个新的、更强大的系统，这将为用户提供自己的 Algolia 应用程序和新凭据。]]></description>
@@ -18,7 +18,7 @@
         </item>
         <item>
             <title><![CDATA[Welcome]]></title>
-            <link>https://iRoySwift.github.io/RoysBlog/blog/welcome</link>
+            <link>https://iRoySwift.github.io/blog/welcome</link>
             <guid>welcome</guid>
             <pubDate>Thu, 26 Aug 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Docusaurus blogging features are powered by the blog plugin.]]></description>
@@ -29,7 +29,7 @@
         </item>
         <item>
             <title><![CDATA[创建Solana钱包]]></title>
-            <link>https://iRoySwift.github.io/RoysBlog/blog/create-my-solana-wallet</link>
+            <link>https://iRoySwift.github.io/blog/create-my-solana-wallet</link>
             <guid>create-my-solana-wallet</guid>
             <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[💸 什么是 Solana?]]></description>
