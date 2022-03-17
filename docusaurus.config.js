@@ -11,14 +11,14 @@ const TwitterSvg =
 const config = {
   title: "Roy's Blog",
   tagline: '全栈进阶之路',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://iRoySwift.github.io/RoysBlog',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: "Roy's Blog", // Usually your repo name.
-
+  organizationName: 'iRoySwift', // Usually your GitHub org/user name.
+  projectName: 'RoysBlog', // Usually your repo name.
+  trailingSlash: false,
   presets: [
     [
       'classic',
