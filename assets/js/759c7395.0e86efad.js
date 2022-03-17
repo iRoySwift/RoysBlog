@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[4895],{8855:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/solana","name":"Solana","count":1,"permalink":"/blog/tags/solana"}')}}]);

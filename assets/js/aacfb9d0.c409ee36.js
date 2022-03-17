@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[8156],{4523:function(s){s.exports=JSON.parse('{"allTagsPath":"/RoysBlog/blog/tags","slug":"/RoysBlog/blog/tags/docusaurus","name":"docusaurus","count":1,"permalink":"/RoysBlog/blog/tags/docusaurus"}')}}]);
