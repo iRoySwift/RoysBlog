@@ -11,7 +11,7 @@ const TwitterSvg =
 const config = {
   title: "Roy's Blog",
   tagline: '全栈进阶之路',
-  url: 'https://iRoySwift.github.io/RoysBlog',
+  url: 'https://iRoySwift.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
