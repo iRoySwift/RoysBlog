@@ -12,7 +12,7 @@ const config = {
   title: "Roy's Blog",
   tagline: '全栈进阶之路',
   url: 'https://iRoySwift.github.io',
-  baseUrl: '/',
+  baseUrl: '/RoysBlog/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
