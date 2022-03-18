@@ -27,7 +27,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
+          editUrl: 'https://github.com/iRoySwift/RoysBlog/tree/master'
         },
         blog: {
           showReadingTime: true,
@@ -39,7 +39,7 @@ const config = {
           blogSidebarTitle: 'All our posts',
           blogSidebarCount: 'ALL',
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
+          editUrl: 'https://github.com/iRoySwift/RoysBlog/tree/master'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
@@ -59,7 +59,7 @@ const config = {
       navbar: {
         title: "Roy's Blog",
         logo: {
-          alt: 'My Site Logo',
+          alt: "Roy's Blog",
           src: 'img/logo.svg'
         },
         items: [
@@ -75,7 +75,7 @@ const config = {
           //   position: 'right'
           // },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/iRoySwift/RoysBlog',
             label: 'GitHub',
             position: 'right'
           }
@@ -132,7 +132,7 @@ const config = {
       },
       announcementBar: {
         id: 'announcementBar-2', // Increment on change
-        content: `⭐️ If you like Docusaurus, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/facebook/docusaurus">GitHub</a> and follow us on <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/docusaurus" >Twitter</a> ${TwitterSvg}`
+        content: `⭐️ Support Ukraine 🇺🇦 <a target="_blank" rel="noopener noreferrer" href="https://nation.io/dao/ukraine">Help Provide Humanitarian Aid to Ukraine.</a> and follow us on <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/_AidForUkraine" >Twitter</a> ${TwitterSvg}`
       }
     }),
   i18n: {
