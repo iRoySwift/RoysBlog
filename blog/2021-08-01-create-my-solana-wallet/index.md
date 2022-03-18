@@ -4,7 +4,7 @@ slug: create-my-solana-wallet
 authors: roy
 tags: [Solana, Wallet]
 image: https://explorer.solana.com/favicon.ico
-hide_table_of_contents: true
+hide_table_of_contents: false
 # date: 2021-09-13T10:00
 ---
 
