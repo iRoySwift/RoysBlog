@@ -1,16 +1,24 @@
 ---
 id: gitmoji
 # sidebar_position: 1
-title: git提交信息emoji使用指南
+title: Git提交信息Emoji使用指南
 ---
 
-# 介绍
+# Git 提交信息 Emoji 使用指南
 
 <!-- https://gitmoji.dev/ -->
 
 [gitmoji😜](https://gitmoji.dev/) 是一个标准化和解释在 GitHub 提交消息上使用 emoji 的倡议。 gitmoji[![stars](https://img.shields.io/github/stars/carloscuesta/gitmoji?style=social)](https://github.com/carloscuesta/gitmoji) 是一个开源项目，专门规定了在 github 提交代码时应当遵循的 emoji 规范
 
 在 git commit 上使用 emoji 提供了一种简单的方法，仅通过查看所使用的表情符号来**确定提交的目的或意图**。
+
+## [Gitmoji](https://github.com/seatonjiang/gitmoji-vscode) Vscode 插件安装
+
+- Install
+  1. Open Visual Studio Code.
+  2. Press Ctrl+Shift+X to open the Extensions tab.
+  3. Type Gitmoji to find the extension.
+  4. Click the Install button, then the Enable button.
 
 ## Related tools
 
@@ -24,7 +32,7 @@ title: git提交信息emoji使用指南
 - [gitmoji-atom](https://github.com/ThatXliner/gitmoji-atom): Gitmoji for Atom
 - [traymoji](https://github.com/CoenWarmer/traymoji): A Electron Tray App for Gitmojis
 
-## gitmoji 表情库
+## Gitmoji 表情库
 
 | 样式  | 代码                          | 含义                                        |
 | ----- | ----------------------------- | ------------------------------------------- |
