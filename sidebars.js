@@ -25,14 +25,37 @@ const sidebars = {
     'intro',
     {
       type: 'category',
-      label: 'Git',
+      label: '工具',
       link: {
         type: 'generated-index',
         description: "Let's learn Git!",
-        keywords: ['git']
+        keywords: ['git', 'lerna']
       },
       collapsed: false,
-      items: ['git/gitmoji']
+      items: [
+        {
+          type: 'category',
+          label: 'Git',
+          link: {
+            type: 'generated-index',
+            description: "Let's learn Git!",
+            keywords: ['git']
+          },
+          collapsed: false,
+          items: ['git/gitmoji']
+        },
+        {
+          type: 'category',
+          label: 'Lerna',
+          link: {
+            type: 'generated-index',
+            description: "Let's learn Lerna!",
+            keywords: ['Lerna']
+          },
+          collapsed: false,
+          items: ['lerna/learn-lerna']
+        }
+      ]
     },
     {
       type: 'category',
