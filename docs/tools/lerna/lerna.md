@@ -60,6 +60,14 @@ lerna-repo/
   lerna.json
 ```
 
+### 开始
+
+- 创建包
+
+```
+lerna create swift-g6
+```
+
 ## 它是如何工作的
 
 Lerna 允许您使用两种模式之一来管理项目：Fixed or Independent。

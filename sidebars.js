@@ -29,7 +29,7 @@ const sidebars = {
       link: {
         type: 'generated-index',
         description: "Let's learn Git!",
-        keywords: ['git', 'lerna']
+        keywords: ['tools', 'git', 'lerna']
       },
       collapsed: false,
       items: [
@@ -42,7 +42,7 @@ const sidebars = {
             keywords: ['git']
           },
           collapsed: false,
-          items: ['git/gitmoji']
+          items: ['tools/git/gitmoji']
         },
         {
           type: 'category',
@@ -53,7 +53,18 @@ const sidebars = {
             keywords: ['Lerna']
           },
           collapsed: false,
-          items: ['lerna/learn-lerna']
+          items: ['tools/lerna/learn-lerna']
+        },
+        {
+          type: 'category',
+          label: 'NPM',
+          link: {
+            type: 'generated-index',
+            description: "Let's learn NPM!",
+            keywords: ['NPM']
+          },
+          collapsed: false,
+          items: ['tools/npm/learn-npm']
         }
       ]
     },
@@ -62,6 +73,7 @@ const sidebars = {
       label: '前端',
       collapsed: false,
       items: [
+        'web/react/custom-templates',
         {
           type: 'category',
           label: 'React',
