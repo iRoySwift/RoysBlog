@@ -172,47 +172,268 @@ src/
   - 在当前 Lerna 仓库中执行引导流程（bootstrap）。安装所有 依赖项并链接任何交叉依赖。
   - 此命令至关重要，因为它让你可以 在 require() 中直接通过软件包的名称进行加载，就好像此软件包已经存在于 你的 node_modules 目录下一样。
 
-- `lerna import <pathToRepo>`
-
-  - 将本地路径 `<pathToRepo>` 中的软件包导入（import） `packages/<directory-name>` 中并提交 commit。
-
-- `lerna publish`
-
-  - 为已经更新过的软件包创建一个新版本。提示 输入新版本号并更新 git 和 npm 上的所有软件包。
-
-  - 参数
-
-    --npm-tag [tagname] — 使用给定的 npm dist-tag （默认为 latest）发布到 npm。
-
-    --canary/-c – 创建一个 canary 版本。
-
-    --skip-git – 不要运行任何 git 命令。
-
-    --force-publish [packages] — 强制发布 指定的一个或多个软件包（以逗号分隔）或使用 \* 表示所有软件包（对于修改过的软件包跳过 git diff 检查）。
-
 - `lerna changed`
 
   - 检查自上次发布以来哪些软件包被修改过。
 
-- `lerna diff [package?]`
+- `lerna diff [package?]` or `lerna update`
 
   - 列出所有或某个软件包自上次发布以来的修改情况。
 
-- `lerna run [script]`
+<details title="lerna run">
+  <summary>
+    lerna run
+  </summary>
 
-  - 在每一个包含 [script] 脚本的软件包中运行此 npm 脚本。
+```
+$ lerna run <script> -- [..args]
+```
+
+- 在每一个包含 [script] 脚本的软件包中运行此 npm 脚本。
+
+```
+# 例如
+$ lerna run test # 运行所有包的 test 命令
+$ lerna run build # 运行所有包的 build 命令
+$ lerna run --parallel watch # 观看所有包并在更改时发报，流式处理前缀输出
+$ lerna run --scope my-component test # 运行 my-component 模块下的 test
+```
+
+</details>
 
 - `lerna ls`
 
   - 列出当前 Lerna 仓库中的所有公共软件包（public packages）。
 
-- `lerna version`
-- `lerna exec`
-- `lerna add`
+<details title="lerna version">
+  <summary>
+  lerna version
+  </summary>
+
+- lerna 通过 version 命令来为各个模块进行版本迭代。基本命令如下：
+
+  ```
+    $ lerna version [major | minor | patch | premajor | preminor | prepatch | prerelease]
+  ```
+
+  如果不选择此次迭代类型，则会进入交互式的提示流程来确定此次迭代类型
+
+  ```
+  $ lerna version 1.0.1 # 按照指定版本进行迭代
+  $ lerna version patch # 根据 semver 迭代版本号最后一位
+  $ lerna version # 进入交互流程选择迭代类型
+  ```
+
+  :::warning
+
+  如果你的 lerna 项目中各个模块版本不是按照同一个版本号维护（即创建时选择 independent 模式），那么会分别对各个包进行版本迭代
+
+  :::
+
+  - 当执行此命令时，会发生如下行为:
+    - 1. 标记每一个从上次打过 tag 发布后产生更新的包
+    - 2. 提示选择此次迭代的新版本号
+    - 3. 修改 package.json 中的 version 值来反映此次更新
+    - 4. 提交记录此次更新并打 tag
+    - 5. 推送到远端仓库
+
+  :::info 小技巧：
+
+  你可以在执行此命令的时候加上 ——no-push 来阻止默认的推送行为，在你检查确认没有错误后再执行 git push 推送
+
+  :::
+
+  - --conventional-changelog
+
+  ```
+  $ lerna version --conventional-commits
+  ```
+
+  - version 支持根据符合规范的提交记录在每个模块中自动创建和更新 CHANGELOG.md 文件，同时还会根据提交记录来确定此次迭代的类型。只需要在执行命令的时候带上 --conventional-changelog 参数即可
+
+  - --changelog-preset
+
+  ```
+  $ lerna version --conventional-commits --changelog-preset angular-bitbucket
+  ```
+
+  changelog 默认的预设是`angular`，你可以通过这个参数来选择你想要的预设创建和更新 `CHANGELOG.md`
+
+  预设的名字在解析的时候会被增添 `conventional-changelog-` 前缀，如果你设置的是 `angular`，那么实际加载预设的时候会去找 `conventional-changelog-angular` 这个包，如果是带域的包，则需要按照 `@scope/name` 的规则去指明，最后会被解析成 `@scope/conventional-changelog-name`。
+
+  :::info 小技巧：
+
+  上述 2 个参数也可以直接写在 lerna.json 文件中，这样每次执行 lerna version 命令的时候就会默认采用上面的 2 个参数
+
+  :::
+
+  ```js
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "changelogPreset": "angular"
+    }
+  }
+  ```
+
+</details>
+
+<details title="lerna exec">
+  <summary>
+  lerna exec
+  </summary>
+
+- 卸载依赖
+
+```
+  $ lerna exec -- <command> [..args] # 在所有包中运行该命令
+  # 例如
+  $ lerna exec --scope=npm-list  yarn remove listr # 将 npm-list 包下的 listr 卸载
+  $ lerna exec -- yarn remove listr # 将所有包下的 listr 卸载
+```
+
+</details>
+
+<details title="lerna add">
+  <summary>
+  lerna add
+  </summary>
+
+```
+$ lerna add <package>[@version] [--dev] [--exact] # 命令签名
+```
+
+- 当我们执行此命令后，将会执行下面那 2 个动作：
+  - 在每一个符合要求的模块里安装指明的依赖包，类似于在指定模块文件夹中执行 `npm install <package>`。
+  - 更新每个安装了该依赖包的模块中的 `package.json` 中的依赖包信息
+
+```
+  # 例如
+  $ lerna add module-1 --scope=module-2 # 将 module-1 安装到 module-2
+  $ lerna add module-1 --scope=module-2 --dev # 将 module-1 安装到 module-2 的 devDependencies 下
+  $ lerna add module-1 # 将 module-1 安装到除 module-1 以外的所有模块
+  $ lerna add babel-core # 将 babel-core 安装到所有模块
+
+```
+
+</details>
+
 - `lerna clean`
+
+  - 清理依赖包
+
 - `lerna link`
-- `lerna create`
-- `lerna info`
+
+<details>
+
+<summary>
+lerna create
+</summary>
+
+```
+$ lerna create <name> [loc]
+```
+
+- name 是模块的名称（必填项，可包含作用域，如 @uedlinker/module-a），必须唯一且可以发布（npm 仓库中无重名已发布包）
+- loc 是自定义的包路径（选填）, 会根据你在 lerna.json 文件中的 packages 的值去匹配，默认采用该数组的第一个路径，指定其他路径时只要写明路径中的唯一值即可，例如想选择 /user/lerna-repo/modules 这个路径，只需要执行如下命令即可
+  命令执行完后，lerna 会帮我们在指定位置创建模块的文件夹，同时会默认在该文件夹下执行 npm init 的命令，在终端上根据根据提示填写所有信息后会帮我们创建对应的 package.json 文件，大致的结构如下
+
+```
+
+    lerna-repo/
+      ┣━ packages/
+      ┃     ┗━ package-a/
+      ┃            ┣━ ...
+      ┃            ┗━ package.json
+      ┣━ lerna.json
+      ┗━ package.json
+```
+
+</details>
+
+<details title="lerna import">
+
+<summary>
+lerna import
+</summary>
+
+```
+lerna import <pathToRepo>
+```
+
+- 将本地路径 `<pathToRepo>` 中的软件包导入（import） `packages/<directory-name>` 中并提交 commit。
+- pathToRepo 是本项目外的包含 npm 包的 git 仓库路径（相对于本项目根路径的相对路径）
+- 执行后会将该模块整体复制到指定的依赖包存放路径下，同时会把该模块之前所有提交记录合并到当前项目提交记录中
+
+</details>
+
+<details title="lerna info">
+  <summary>
+  lerna info
+  </summary>
+</details>
+
+<details title="lerna publish">
+
+  <summary>lerna publish</summary>
+
+- 为已经更新过的软件包创建一个新版本。提示 输入新版本号并更新 git 和 npm 上的所有软件包。
+
+- 参数
+
+  - --npm-tag [tagname] — 使用给定的 npm dist-tag （默认为 latest）发布到 npm。
+
+  - --canary/-c – 创建一个 canary 版本。
+
+  - --skip-git – 不要运行任何 git 命令。
+
+  - --force-publish [packages] — 强制发布 指定的一个或多个软件包（以逗号分隔）或使用 \* 表示所有软件包（对于修改过的软件包跳过 git diff 检查）。
+
+- 当执行此命令时，会发生如下行为:
+  - 1. 发布自上次发布以来更新的包(在底层执行了 `lerna version`，2.x 版本遗留的行为)
+  - 2. 发布当前提交中打了 tag 的包
+  - 3. 发布在之前的提交中更新的未经版本化的 “canary” 版本的软件包（及其依赖项）
+
+:::caution 小技巧
+
+Lerna 不会发布在 `package.json` 中将 `private` 属性设置为 `true` 的模块，如果要发布带域的包，你还需要在 'package.json' 中设置如下内容：
+
+:::
+
+```json
+  "publishConfig": {
+    "access": "public"
+  }
+
+```
+
+```json title="lerna.json"
+{
+  "version": "1.1.3",
+  "npmClient": "npm",
+  "command": {
+    "publish": {
+      "ignoreChanges": ["ignored-file", "*.md"]
+    },
+    "bootstrap": {
+      "ignore": "component-*",
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  },
+  "packages": ["packages/*"]
+}
+```
+
+- 配置
+  - `version`：当前库的版本
+  - `npmClient`： 允许指定命令使用的 client， 默认是 npm， 可以设置成 yarn
+  - `command.publish.ignoreChanges`：可以指定那些目录或者文件的变更不会被 publish
+  - `command.bootstrap.ignore`：指定不受 bootstrap 命令影响的包
+  - `command.bootstrap.npmClientArgs`：指定默认传给 lerna bootstrap 命令的参数
+  - `command.bootstrap.scope`：指定那些包会受 lerna bootstrap 命令影响
+  - `packages`：指定包所在的目录
+
+</details>
 
 ## Lerna 用户列表
 

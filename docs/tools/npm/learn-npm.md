@@ -84,16 +84,20 @@ import myImageUrl from './img/yarninteractive.png';
 
 </TabItem>
 </Tabs>
-
+````
 
 ### 4. 查看安装包 packageName 最新发布的版本信息
+
 ```
 npm view | info packageName version
 ```
+
 ### 5. 查看远程安装包 packageName 的所有发布的版本信息
+
 ```
 npm view | info packageName versions
 ```
+
 ### 6. 检查过时的安装包
 
 ```
@@ -115,4 +119,16 @@ npm outdated [packageName]
 `Location` 是该依赖包在所居于的依赖树中所在的位置
 
 :::
-````
+
+### 7. npm 包发布
+
+- npm login
+
+```
+  # Username: authorname
+  # Password:
+  # Email: (this IS public) email@email.com
+  # Logged in as authorname on https://registry.npmjs.org/.
+```
+
+- npm publish
