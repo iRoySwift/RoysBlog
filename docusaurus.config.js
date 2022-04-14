@@ -142,8 +142,8 @@ const config = {
       }
     }),
   i18n: {
-    defaultLocale: 'zh-cn',
-    locales: ['zh-cn']
+    defaultLocale: 'zh-cn'
+    // locales: ['zh-cn']
     // localeConfigs: {
     //   en: {
     //     htmlLang: 'en-GB'
