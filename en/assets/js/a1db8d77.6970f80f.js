@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[6269],{4919:function(l){l.exports=JSON.parse('{"allTagsPath":"/en/blog/tags","slug":"/en/blog/tags/hello","name":"hello","count":1,"permalink":"/en/blog/tags/hello"}')}}]);
