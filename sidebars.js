@@ -26,11 +26,6 @@ const sidebars = {
     {
       type: 'category',
       label: '工具',
-      link: {
-        type: 'generated-index',
-        description: "Let's learn Git!",
-        keywords: ['tools', 'git', 'lerna']
-      },
       collapsed: false,
       items: [
         {

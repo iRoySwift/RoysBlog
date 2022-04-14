@@ -114,7 +114,7 @@ Lerna 允许您使用两种模式之一来管理项目：Fixed or Independent。
 - `version`: 存储库的当前版本。
 - `npmClient`: 指定要运行命令的特定客户端的选项（也可以根据每个命令指定）。更改为"yarn"以使用纱线运行所有命令。默认为“npm”。
 - `command.publish.ignoreChanges`: 一系列不会包含在`lerna changed/publish`中的 glob。使用此功能可防止因更改而不必要地发布新版本，例如修复 README.md 错别字。
-- `command.publish.message`:执行发布版本更新时的自定义提交消息。有关更多详细信息，请参阅[@lerna/version](commands/version#--message-msg)。
+- `command.publish.message`:执行发布版本更新时的自定义提交消息。有关更多详细信息，请参阅@lerna/version。
 - `command.publish.registry`: 使用它设置自定义注册表网址以发布到 npmjs.org，如果需要，您必须已经进行身份验证。
 - `command.bootstrap.ignore`:运行`lerna bootstrap`命令时不会引导的 glob 数组。
 - `command.bootstrap.npmClientArgs`: 在`lerna bootstrap`命令期间，将作为参数直接传递给 `npm install` 的字符串数组。
