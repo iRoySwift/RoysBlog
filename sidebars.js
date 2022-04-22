@@ -69,6 +69,7 @@ const sidebars = {
       collapsed: false,
       items: [
         'web/react/custom-templates',
+
         {
           type: 'category',
           label: 'React',
@@ -78,7 +79,7 @@ const sidebars = {
             keywords: ['react']
           },
           collapsed: false,
-          items: ['web/react/learn-react']
+          items: ['web/react/cra-advanced-config', 'web/react/learn-react']
         }
         // {
         //   type: 'category',
