@@ -1,3 +1,10 @@
+/*
+ * @Author: Roy
+ * @Date: 2022-03-17 21:06:55
+ * @LastEditors: Roy
+ * @LastEditTime: 2022-09-28 16:52:10
+ * @Description: 文档菜单
+ */
 /**
  * Creating a sidebar enables you to:
  - create an ordered group of docs
@@ -10,6 +17,7 @@
  */
 
 // @ts-check
+const tools = require('./sidebars/tools');
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
@@ -25,44 +33,23 @@ const sidebars = {
     'intro',
     {
       type: 'category',
-      label: '工具',
+      label: 'Solana',
       collapsed: false,
       items: [
         {
           type: 'category',
-          label: 'Git',
+          label: '安装Solana环境',
           link: {
             type: 'generated-index',
-            description: "Let's learn Git!",
-            keywords: ['git']
+            description: 'A Starter Kit for New Solana Developer',
+            keywords: ['Solana']
           },
           collapsed: false,
-          items: ['tools/git/gitmoji']
-        },
-        {
-          type: 'category',
-          label: 'Lerna',
-          link: {
-            type: 'generated-index',
-            description: "Let's learn Lerna!",
-            keywords: ['Lerna']
-          },
-          collapsed: false,
-          items: ['tools/lerna/learn-lerna']
-        },
-        {
-          type: 'category',
-          label: 'NPM',
-          link: {
-            type: 'generated-index',
-            description: "Let's learn NPM!",
-            keywords: ['NPM']
-          },
-          collapsed: false,
-          items: ['tools/npm/learn-npm']
+          items: ['solana/install-solana-env']
         }
       ]
     },
+    tools,
     {
       type: 'category',
       label: '前端',
