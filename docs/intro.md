@@ -23,7 +23,7 @@ description: 小白进阶之路
 
 - 有助于强迫自己不断学习新的知识
 
-## 脚手架
+## 🔧 脚手架
 
 - 快速搭建 React 项目（eslint、prettier）
 

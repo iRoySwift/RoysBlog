@@ -12,8 +12,8 @@ const TwitterSvg =
 const config = {
   title: "Roy's Blog",
   tagline: '全栈进阶之路',
-  url: 'https://www.effiego.com',
-  baseUrl: '/',
+  url: 'http://www.effie.vip',
+  baseUrl: '/RoysBlog/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
