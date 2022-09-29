@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[7669],{972:function(s){s.exports=JSON.parse('{"allTagsPath":"/RoysBlog/blog/tags","slug":"/RoysBlog/blog/tags/dns","name":"DNS","count":1,"permalink":"/RoysBlog/blog/tags/dns"}')}}]);

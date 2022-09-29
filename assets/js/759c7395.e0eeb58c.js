@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[4895],{8855:a=>{a.exports=JSON.parse('{"label":"Solana","permalink":"/blog/tags/solana","allTagsPath":"/blog/tags","count":1}')}}]);

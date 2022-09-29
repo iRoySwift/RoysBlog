@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[7683],{8516:function(l){l.exports=JSON.parse('{"allTagsPath":"/RoysBlog/blog/tags","slug":"/RoysBlog/blog/tags/hello","name":"hello","count":1,"permalink":"/RoysBlog/blog/tags/hello"}')}}]);
