@@ -260,7 +260,7 @@ jobs:
 如果您需要为 GitHub Pages 自定义域名，请在 `static` 目录中创建 `CNAME` 文件。 `static` 目录内的内容将在部署时复制到 `build` 文件夹的根目录。 使用自定义域时，请将 baseUrl: '/projectName/' 改回 baseUrl: '/'，并将您的 url 设置为自定义域名。
 
 ```
-echo www.effiego.com > CNAME
+echo blog.effie.vip > CNAME
 ```
 
 您可参阅 GitHub Pages 的[关于 GitHub Pages](https://docs.github.com/cn/pages/getting-started-with-github-pages/about-github-pages) 文档以了解详情。
@@ -272,7 +272,7 @@ echo www.effiego.com > CNAME
 ```js title="docusaurus.config.js"
 module.exports = {
   // ...
-  url: 'https://www.effiego.com', // Your website URL
+  url: 'https://blog.effie.vip', // Your website URL
   baseUrl: '/',
   // highlight-start
   projectName: 'RoysBlog',

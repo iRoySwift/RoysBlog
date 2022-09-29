@@ -12,7 +12,7 @@ const TwitterSvg =
 const config = {
   title: "Roy's Blog",
   tagline: '全栈进阶之路',
-  url: 'http://www.effie.vip',
+  url: 'http://blog.effie.vip',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
