@@ -13,7 +13,7 @@ const config = {
   title: "Roy's Blog",
   tagline: '全栈进阶之路',
   url: 'http://www.effie.vip',
-  baseUrl: '/RoysBlog/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
