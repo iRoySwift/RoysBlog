@@ -1,14 +1,7 @@
 ---
 title: 文档搜索
-authors:
-  - 
-    name: Clément Vannicatte
-    title: 软件工程师@ Algolia
-    url: https://github.com/shortcuts
-    image_url: https://github.com/shortcuts.png
-    twitter: sh0rtcts
-  - 
-    key: slorber
+slug: algolia-docsearch-migration
+authors: roy
 tags:
   - search
 image: ./img/social-card.png
@@ -37,10 +30,10 @@ const config = {
     algolia: {
       // highlight-start
       appId: '<NEW_APP_ID>',
-      apiKey: '<NEW_SEARCH_API_KEY>',
+      apiKey: '<NEW_SEARCH_API_KEY>'
       // highlight-end
-    },
-  },
+    }
+  }
 };
 
 module.exports = config;
