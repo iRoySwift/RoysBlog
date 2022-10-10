@@ -23,6 +23,8 @@ hide_table_of_contents: false
 Godday DNS 记录：http://effie.vip
 
 使用自定义域名访问 Github Pages
+
+A=> Parked : `当您有一个指向/链接到GoDaddy服务的域，然后删除该服务时，通常会发生这种情况，它会添加/调整A记录为“主动”，以便您至少有一个登陆页面，而不是一个看起来损坏的域`
 :::
 
 | 类型  | 名称            | 内容                                    | TTL    |
@@ -30,6 +32,7 @@ Godday DNS 记录：http://effie.vip
 | A     | @               | Parked                                  | 600 秒 |
 | NS    | @               | ns49.domaincontrol.com.                 | 1 小時 |
 | NS    | @               | ns50.domaincontrol.com.                 | 1 小時 |
+| CNAME | blog            | iroyswift.github.io.                    | 1 小時 |
 | CNAME | www             | effie.vip.                              | 1 小時 |
 | CNAME | \_domainconnect | \_domainconnect.gd.domaincontrol.com.   | 1 小時 |
 | SOA   | @               | 主要名稱伺服器：ns49.domaincontrol.com. | 1 小時 |

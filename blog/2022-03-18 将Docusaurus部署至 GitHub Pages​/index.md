@@ -48,7 +48,7 @@ GitHub Pages 默认为 Docusaurus 网址链接添加结尾斜杠。 推荐设置
 module.exports = {
   // ...
   url: 'https://iRoySwift.github.io', // Your website URL
-  baseUrl: '/RoysBlog/',
+  baseUrl: '/',
   // highlight-start
   projectName: 'RoysBlog',
   organizationName: 'iRoySwift',
