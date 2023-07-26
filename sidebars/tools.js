@@ -8,7 +8,7 @@
 
 const tools = {
     type: "category",
-    label: "工具1",
+    label: "工具",
     collapsed: false,
     items: [
         {
@@ -31,11 +31,7 @@ const tools = {
                 keywords: ["git"],
             },
             collapsed: true,
-            items: [
-                "tools/git/git-tutorial",
-                "tools/git/gitmoji",
-                "tools/brew/brew_cmd",
-            ],
+            items: ["tools/git/git-tutorial", "tools/git/gitmoji"],
         },
         {
             type: "category",
