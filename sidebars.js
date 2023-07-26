@@ -17,7 +17,7 @@
  */
 
 // @ts-check
-const tools = require('./sidebars/tools');
+const tools = require("./sidebars/tools");
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
@@ -30,58 +30,50 @@ const sidebars = {
         //   label: "Tutorial",
         //   items: ["greeting", "tutorial-basics"],
         // },
-        'intro',
+        "intro",
         {
-            type: 'category',
-            label: 'Solana',
+            type: "category",
+            label: "Solana",
             collapsed: false,
             items: [
                 {
-                    type: 'category',
-                    label: '安装Solana环境',
+                    type: "category",
+                    label: "安装Solana环境",
                     link: {
-                        type: 'generated-index',
-                        description: 'A Starter Kit for New Solana Developer',
-                        keywords: ['Solana']
+                        type: "generated-index",
+                        description: "A Starter Kit for New Solana Developer",
+                        keywords: ["Solana"],
                     },
                     collapsed: false,
-                    items: ['solana/install-solana-env']
-                }
-            ]
+                    items: ["solana/install-solana-env"],
+                },
+            ],
         },
         tools,
         {
-            type: 'category',
-            label: '前端',
+            type: "category",
+            label: "前端",
             collapsed: false,
             items: [
-                'web/react/custom-templates',
+                "web/react/custom-templates",
 
                 {
-                    type: 'category',
-                    label: 'React',
+                    type: "category",
+                    label: "React",
                     link: {
-                        type: 'generated-index',
+                        type: "generated-index",
                         description: "Let's learn React!",
-                        keywords: ['react']
+                        keywords: ["react"],
                     },
                     collapsed: false,
-                    items: ['web/react/cra-advanced-config', 'web/react/learn-react']
-                }
-                // {
-                //   type: 'category',
-                //   label: 'Vue',
-                //   link: {
-                //     type: 'generated-index',
-                //     description: "Let's learn Vue!",
-                //     keywords: ['vue']
-                //   },
-                //   collapsed: false,
-                //   items: ['web/vue/learn-vue']
-                // }
-            ]
-        }
-    ]
+                    items: [
+                        "web/react/cra-advanced-config",
+                        "web/react/learn-react",
+                    ],
+                },
+            ],
+        },
+    ],
 };
 
 module.exports = sidebars;
