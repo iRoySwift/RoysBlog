@@ -15,10 +15,10 @@ hide_table_of_contents: false
 
 <!--truncate-->
 
-```mdx-code-block
+````mdx-code-block
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-```
+````
 
 GitHub Pages 从默认分支（通常为 master/main）或 gh-pages 分支以及 root 或/doc 文件夹中提取部署就绪文件（来自 docsaurus 构建的输出）。您可以通过存储库中的 Settings > Pages。该分支将被称为“部署分支”。
 
@@ -46,15 +46,15 @@ GitHub Pages 默认为 Docusaurus 网址链接添加结尾斜杠。 推荐设置
 
 ```js title="docusaurus.config.js"
 module.exports = {
-  // ...
-  url: 'https://iRoySwift.github.io', // Your website URL
-  baseUrl: '/',
-  // highlight-start
-  projectName: 'RoysBlog',
-  organizationName: 'iRoySwift',
-  trailingSlash: false
-  // highlight-end
-  // ...
+    // ...
+    url: "https://iRoySwift.github.io", // Your website URL
+    baseUrl: "/",
+    // highlight-start
+    projectName: "RoysBlog",
+    organizationName: "iRoySwift",
+    trailingSlash: false,
+    // highlight-end
+    // ...
 };
 ```
 
@@ -64,8 +64,8 @@ module.exports = {
 
 ### 部署代码库:**Same**与 **Remote**
 
-- 源代码库与部署代码库是相同的远程库
-- 源代码库与部署代码库是不同的远程库
+-   源代码库与部署代码库是相同的远程库
+-   源代码库与部署代码库是不同的远程库
 
 ````mdx-code-block
 <Tabs>
@@ -241,15 +241,15 @@ jobs:
 
 :::caution 文件与修改
 
-- 需要提交与修改的文件
+-   需要提交与修改的文件
 
-  - 1. 提交 yarn.lock 文件
-  - 2. 修改 package.json 中"private": false,
+    -   1. 提交 yarn.lock 文件
+    -   2. 修改 package.json 中"private": false,
 
-- Action 流程走完，修改 GitHub Pages
-  - 自动化流程会自动打包代码到 gh-pages 分支下
-  - 在仓库名称下，单击 Settings（设置）-> Pages。
-  - 在 Source 配置项处，选择 gh-pages 分支，文件夹选择 root
+-   Action 流程走完，修改 GitHub Pages
+    -   自动化流程会自动打包代码到 gh-pages 分支下
+    -   在仓库名称下，单击 Settings（设置）-> Pages。
+    -   在 Source 配置项处，选择 gh-pages 分支，文件夹选择 root
 
 :::
 
@@ -271,24 +271,24 @@ echo blog.effie.vip > CNAME
 
 ```js title="docusaurus.config.js"
 module.exports = {
-  // ...
-  url: 'https://blog.effie.vip', // Your website URL
-  baseUrl: '/',
-  // highlight-start
-  projectName: 'RoysBlog',
-  organizationName: 'iRoySwift',
-  trailingSlash: false
-  // highlight-end
-  // ...
+    // ...
+    url: "https://blog.effie.vip", // Your website URL
+    baseUrl: "/",
+    // highlight-start
+    projectName: "RoysBlog",
+    organizationName: "iRoySwift",
+    trailingSlash: false,
+    // highlight-end
+    // ...
 };
 ```
 
 ### 修改 DNS 配置
 
-- 配置填写参考 [Github](https://docs.github.com/cn/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain)
+-   配置填写参考 [Github](https://docs.github.com/cn/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain)
 
-- 我的 [Cloudflare](https://dash.cloudflare.com) 域名配置
-  ![DNS Config](./img/dns-config.png)
+-   我的 [Cloudflare](https://dash.cloudflare.com) 域名配置
+    ![DNS Config](./img/dns-config.png)
 
 :::caution 修改 Github custom domain
 

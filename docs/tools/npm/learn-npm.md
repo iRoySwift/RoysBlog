@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 ### 1. 查看全局安装的包
 
-```mdx-code-block
+````mdx-code-block
 <Tabs groupId="list">
   <TabItem value="npm" label="NPM">
     npm list -g --depth=0
@@ -18,11 +18,11 @@ import TabItem from '@theme/TabItem';
     yarn global list --depth=0
   </TabItem>
 </Tabs>
-```
+````
 
 ### 2. 查看 npm 配置
 
-```mdx-code-block
+````mdx-code-block
 <Tabs groupId="config">
   <TabItem value="npm" label="NPM">
     npm config list -l
@@ -31,7 +31,7 @@ import TabItem from '@theme/TabItem';
     yarn config list -l
   </TabItem>
 </Tabs>
-```
+````
 
 ### 3. 更新项目依赖包
 
@@ -84,6 +84,7 @@ import myImageUrl from './img/yarninteractive.png';
 
 </TabItem>
 </Tabs>
+
 ````
 
 ### 4. 查看安装包 packageName 最新发布的版本信息

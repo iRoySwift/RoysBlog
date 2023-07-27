@@ -44,8 +44,6 @@ module.exports = {
     <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="/websit/logo192.png" />
     <link rel="manifest" href="/websit/manifest.json" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <title>React Example PRD</title>
     <script defer="defer" src="/websit/static/js/main.6d7f20c0.js"></script>
     <link href="/websit/static/css/main.28a4e04b.css" rel="stylesheet" />
@@ -114,7 +112,7 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 ### 仍使用 BrowserRouter，但配合服务端改配置
 
 以 nginx 为例：
-假设部署到 www.test.com域名下，项目文件目录：/mnt/h5/reactApp,reactApp就是npm run build 生成的 build 文件夹
+假设部署到 `www.test.com` 域名下，项目文件目录：/mnt/h5/reactApp,reactApp就是npm run build 生成的 build 文件夹
 
 ```json
 server {
