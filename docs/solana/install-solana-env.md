@@ -112,3 +112,14 @@ rustup show
 brew install solana
 solana --version
 ```
+
+2. 用bash
+
+-  用brew安装会丢失solana很多工具
+    - cargo-build-sbf
+    - solana-test-validator
+```bash
+sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+solana --version
+solana-install update
+```
