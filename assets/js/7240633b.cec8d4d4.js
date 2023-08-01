@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[5484],{8586:e=>{e.exports=JSON.parse('{"title":"Homebrew","description":"Let\'s learn Brew!","keywords":["brew"],"slug":"/category/homebrew","permalink":"/docs/category/homebrew","navigation":{"next":{"title":"Homebrew\u547d\u4ee4","permalink":"/docs/tools/brew/"}}}')}}]);
