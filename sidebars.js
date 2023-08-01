@@ -42,7 +42,7 @@ const sidebars = {
                 },
                 {
                     type: "category",
-                    label: "Token",
+                    label: "SPL Token",
                     link: {
                         type: "generated-index",
                         description: "SPL Token Program",
@@ -74,7 +74,7 @@ const sidebars = {
             ],
         },
     ],
-    tools
+    tools,
 };
 
 module.exports = sidebars;
