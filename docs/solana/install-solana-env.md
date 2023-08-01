@@ -1,6 +1,6 @@
 ---
 id: install-solana-env
-title: A Starter Kit for New Solana Developer
+title: 安装Solana环境
 description: 安装Solana环境
 ---
 

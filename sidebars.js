@@ -47,6 +47,17 @@ const sidebars = {
                     collapsed: false,
                     items: ["solana/install-solana-env"],
                 },
+                {
+                    type: "category",
+                    label: "代币计划",
+                    link: {
+                        type: "generated-index",
+                        description: "A Starter Kit for New Solana Developer",
+                        keywords: ["Solana"],
+                    },
+                    collapsed: false,
+                    items: ["solana/spl-token"],
+                },
             ],
         },
         tools,
