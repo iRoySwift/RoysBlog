@@ -71,6 +71,15 @@ const config = {
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            liveCodeBlock: {
+                playgroundPosition: 'bottom',
+            },
+            docs: {
+                sidebar: {
+                    hideable: true,
+                    autoCollapseCategories: true,
+                }
+            },
             colorMode: {
                 defaultMode: "dark",
                 disableSwitch: false,
@@ -88,6 +97,12 @@ const config = {
                         docId: "intro",
                         position: "left",
                         label: "文档",
+                    },
+                    {
+                        type: 'docSidebar',
+                        sidebarId: 'tools',
+                        position: 'left',
+                        label: '工具',
                     },
                     { to: "/blog", label: "博客", position: "left" },
                     // {

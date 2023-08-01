@@ -6,66 +6,56 @@
  * @Description: 工具目录
  */
 
-const tools = {
-    type: "category",
-    label: "工具",
-    collapsed: false,
-    items: [
-        {
-            type: "category",
-            label: "Homebrew",
-            link: {
-                type: "generated-index",
-                description: "Let's learn Brew!",
-                keywords: ["brew"],
-            },
-            collapsed: true,
-            items: ["tools/brew/brew_cmd"],
+const tools = [
+    {
+        type: "category",
+        label: "Homebrew",
+        link: {
+            type: "generated-index",
+            description: "Let's learn Brew!",
+            keywords: ["brew"],
         },
-        {
-            type: "category",
-            label: "Git",
-            link: {
-                type: "generated-index",
-                description: "Let's learn Git!",
-                keywords: ["git"],
-            },
-            collapsed: true,
-            items: ["tools/git/git-tutorial", "tools/git/gitmoji"],
+        items: ["tools/brew/brew_cmd"],
+    },
+    {
+        type: "category",
+        label: "Git",
+        link: {
+            type: "generated-index",
+            description: "Let's learn Git!",
+            keywords: ["git"],
         },
-        {
-            type: "category",
-            label: "Lerna",
-            link: {
-                type: "generated-index",
-                description: "Let's learn Lerna!",
-                keywords: ["Lerna"],
-            },
-            collapsed: true,
-            items: ["tools/lerna/learn-lerna"],
+        items: ["tools/git/git-tutorial", "tools/git/gitmoji"],
+    },
+    {
+        type: "category",
+        label: "Lerna",
+        link: {
+            type: "generated-index",
+            description: "Let's learn Lerna!",
+            keywords: ["Lerna"],
         },
-        {
-            type: "category",
-            label: "NPM",
-            link: {
-                type: "generated-index",
-                description: "Let's learn NPM!",
-                keywords: ["NPM"],
-            },
-            collapsed: true,
-            items: ["tools/npm/learn-npm"],
+        items: ["tools/lerna/learn-lerna"],
+    },
+    {
+        type: "category",
+        label: "NPM",
+        link: {
+            type: "generated-index",
+            description: "Let's learn NPM!",
+            keywords: ["NPM"],
         },
-        {
-            type: "category",
-            label: "开发工具",
-            link: {
-                type: "generated-index",
-                description: "Let's learn NPM!",
-                keywords: ["idea", "vscode"],
-            },
-            collapsed: true,
-            items: ["tools/editor/idea&vscode"],
+        items: ["tools/npm/learn-npm"],
+    },
+    {
+        type: "category",
+        label: "开发工具",
+        link: {
+            type: "generated-index",
+            description: "Let's learn NPM!",
+            keywords: ["idea", "vscode"],
         },
-    ],
-};
+        items: ["tools/editor/idea&vscode"],
+    },
+]
 module.exports = tools;
