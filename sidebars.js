@@ -50,6 +50,49 @@ const sidebars = {
                     },
                     items: ["solana/token-program"],
                 },
+                {
+                    type: "category",
+                    label: "Solana中文开发教程",
+                    link: {
+                        type: "generated-index",
+                        description: "Solana中文开发教程",
+                        keywords: ["Solana"],
+                    },
+                    items: [
+                        {
+                            type: "category",
+                            label: "1、Solana基础知识",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/1、Solana基础知识/solana-intro",
+                                "solana/solana-bootcamp/1、Solana基础知识/solana-core",
+                                "solana/solana-bootcamp/1、Solana基础知识/solana-spl",
+                                "solana/solana-bootcamp/1、Solana基础知识/solana-cmd",
+                                "solana/solana-bootcamp/1、Solana基础知识/solana-wallet",
+                                "solana/solana-bootcamp/1、Solana基础知识/solana-exercise6",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "2、通过与RPC交互",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/2、通过RPC与Solana交互/solana-rpc-intro",
+                                "solana/solana-bootcamp/2、通过RPC与Solana交互/solana-interface-rpc",
+                                "solana/solana-bootcamp/2、通过RPC与Solana交互/solana-push-rpc",
+                                "solana/solana-bootcamp/2、通过RPC与Solana交互/solana-rpc-exercise",
+                            ],
+                        },
+                    ],
+                },
             ],
         },
         {
