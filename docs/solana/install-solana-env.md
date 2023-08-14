@@ -113,13 +113,28 @@ brew install solana
 solana --version
 ```
 
-2. 用bash
+2. 用 bash
 
--  用brew安装会丢失solana很多工具
-    - cargo-build-sbf
-    - solana-test-validator
+-   用 brew 安装会丢失 solana 很多工具
+    -   cargo-build-sbf
+    -   solana-test-validator
+
 ```bash
 sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
 solana --version
 solana-install update
+```
+
+3. Setup a localhost blockchain cluster
+
+```bash
+solana-test-validator
+solana config set --url localhost
+solana config get
+```
+
+dev
+
+```bash
+solana config set --url https://api.devnet.solana.com
 ```

@@ -91,6 +91,21 @@ const sidebars = {
                                 "solana/solana-bootcamp/2、通过RPC与Solana交互/solana-rpc-exercise",
                             ],
                         },
+                        {
+                            type: "category",
+                            label: "3、与Solana合约交互",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/3、与Solana合约交互/solana-web3.js",
+                                // "solana/solana-bootcamp/3、与Solana合约交互/solana-interface-rpc",
+                                // "solana/solana-bootcamp/3、与Solana合约交互/solana-push-rpc",
+                                // "solana/solana-bootcamp/3、与Solana合约交互/solana-rpc-exercise",
+                            ],
+                        },
                     ],
                 },
             ],

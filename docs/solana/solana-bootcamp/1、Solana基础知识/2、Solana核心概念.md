@@ -9,6 +9,14 @@ import ThemedImage from '@theme/ThemedImage';
 import BrowserWindow from '@site/src/components/BrowserWindow';
 ```
 
+[spl-token](https://spl.solana.com/token#example-creating-your-own-fungible-token)
+
+[RPC](https://docs.solana.com/api)
+
+[Solana 命令行工具](https://docs.solana.com/cli/usage#get-pubkey)
+
+[solana-web3.js](https://solana-labs.github.io/solana-web3.js/index.html)
+
 ## Account
 
 在 Solana 中，"Everythin is an Account" 类似 Linux 世界里面把所有的资源都抽象成"文件"一样。
