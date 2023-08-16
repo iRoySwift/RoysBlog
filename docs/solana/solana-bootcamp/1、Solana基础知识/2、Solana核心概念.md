@@ -17,6 +17,8 @@ import BrowserWindow from '@site/src/components/BrowserWindow';
 
 [solana-web3.js](https://solana-labs.github.io/solana-web3.js/index.html)
 
+[@solana/spl-token](https://solana-labs.github.io/solana-program-library/token/js/index.html)
+
 ## Account
 
 在 Solana 中，"Everythin is an Account" 类似 Linux 世界里面把所有的资源都抽象成"文件"一样。

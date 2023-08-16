@@ -101,9 +101,9 @@ const sidebars = {
                             },
                             items: [
                                 "solana/solana-bootcamp/3、与Solana合约交互/solana-web3.js",
-                                // "solana/solana-bootcamp/3、与Solana合约交互/solana-interface-rpc",
-                                // "solana/solana-bootcamp/3、与Solana合约交互/solana-push-rpc",
-                                // "solana/solana-bootcamp/3、与Solana合约交互/solana-rpc-exercise",
+                                "solana/solana-bootcamp/3、与Solana合约交互/solana-wallet-interactive",
+                                "solana/solana-bootcamp/3、与Solana合约交互/solana-contract-call",
+                                "solana/solana-bootcamp/3、与Solana合约交互/solana-contract-execise",
                             ],
                         },
                     ],
