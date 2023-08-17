@@ -15,10 +15,10 @@ hide_table_of_contents: false
 
 <!--truncate-->
 
-````mdx-code-block
+```mdx-code-block
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-````
+```
 
 GitHub Pages 从默认分支（通常为 master/main）或 gh-pages 分支以及 root 或/doc 文件夹中提取部署就绪文件（来自 docsaurus 构建的输出）。您可以通过存储库中的 Settings > Pages。该分支将被称为“部署分支”。
 
@@ -85,7 +85,7 @@ Add these two workflow files:
 
 These files assume you are using yarn. If you use npm, change `cache: yarn`, `yarn install --frozen-lockfile`, `yarn build` to `cache: npm`, `npm ci`, `npm run build` accordingly.
 
-如果您的 Docusaurus 项目不在您的存储库的根目录下，您可能需要配置一个[默认工作目录](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-set-the-default-shell-and-working-directory)，并相应地调整路径。
+如果您的 Docusaurus 项目不在您的存储库的根目录下，您可能需要配置一个[默认工作目录](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#defaultsrun)，并相应地调整路径。
 
 :::
 
