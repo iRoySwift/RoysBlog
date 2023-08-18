@@ -6,13 +6,13 @@ title: Git教程
 
 ## 1、查看 git 配置
 
-```
+```zsh
 git config --list --查看配置
 ```
 
 ## 2、切换本地仓库源
 
-```
+```zsh
 git remote －v
 git remote rm origin
 git remote add origin [url]
@@ -22,7 +22,7 @@ git branch --set-upstream-to=origin/<branch> <branch>
 
 ## 3、藏存本地代码 stash
 
-```
+```zsh
 git stash
 git stash drop stash@{1}
 ```
@@ -31,35 +31,42 @@ git stash drop stash@{1}
 
 1. 切换新分支并追踪远程分支
 
-```git
+```zsh
 $ git checkout -b <branch> --track <remote>/<branch>
-```
-
-2. 以某个 commitid 提交点为基础切换分支，创建新分支
-
-```git
-git checkout -b <new-branch> --no-track <commit>
-```
-
-3. 以当前分支为基础，创建分支
-
-```git
-git checkout -b <new-branch> --no-track <branch>
 ```
 
 ## 5、删除分支
 
-```git
+```zsh
 git branch --delete --force <branch>
 
 ```
 
 ## 6.合并本地仓库与远程仓库
 
-```
+```zsh
 git remote add <name> <URL>
 git pull <name>
 git checkout <name>/<new-branch>
 git merge --allow-unrelated-history [--into-name <branch>]
 git push
+```
+
+## 7. 创建新分支 & PUSH
+
+-   以当前分支为基础，创建分支,并且将新分支 push 到 github
+
+    -   The current branch master has no upstream branch.
+        To push the current branch and set the remote as upstream, use
+
+```zsh
+    git checkout -b <new_branch> --no-track <branch>
+    git push --set-upstream origin <new_branch>
+```
+
+-   以某个 commitid 提交点为基础，创建新分支,并且将新分支 push 到 github
+
+```zsh
+    git checkout -b <new-branch> --no-track <commit>
+    git push --set-upstream origin <new_branch>
 ```
