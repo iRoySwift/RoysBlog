@@ -106,6 +106,21 @@ const sidebars = {
                                 "solana/solana-bootcamp/3、与Solana合约交互/solana-contract-execise",
                             ],
                         },
+                        {
+                            type: "category",
+                            label: "4、Rust基本知识",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/4、Rust基本知识/solana-rust-helloword",
+                                // "solana/solana-bootcamp/4、Rust基本知识/solana-wallet-interactive",
+                                // "solana/solana-bootcamp/4、Rust基本知识/solana-contract-call",
+                                // "solana/solana-bootcamp/4、Rust基本知识/solana-contract-execise",
+                            ],
+                        },
                     ],
                 },
             ],
