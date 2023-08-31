@@ -231,7 +231,7 @@ greeting_account.serialize(&mut *account.data.borrow_mut())?;
 
 因为我们在前端传递的时候，给这个 Account 的 isWritable 是 true，所以我们合约中修改了 Account.data 部分在合约执行结束时，就会修改链上的相关数据。
 
-## 3、客户端访问
+## 4、客户端访问
 
 这里贴上课上客户端访问代码：
 

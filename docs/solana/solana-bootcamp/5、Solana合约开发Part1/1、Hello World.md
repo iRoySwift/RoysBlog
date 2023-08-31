@@ -9,7 +9,7 @@ import ThemedImage from '@theme/ThemedImage';
 import BrowserWindow from '@site/src/components/BrowserWindow';
 ```
 
-Solana 为了初学者可以快速入门，提供了一个 Playground 服务。 可以在不需要本地环境的情况下，进行 DApp 的开发。
+Solana 为了初学者可以快速入门，提供了一个 [Playground](https://beta.solpg.io/) 服务。 可以在不需要本地环境的情况下，进行 DApp 的开发。
 
 ## 1、创建项目
 
