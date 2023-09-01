@@ -142,34 +142,401 @@ Build successful. Completed in 0.60s.
 
 如果我们的合约有修改，只要在这里构建后点击"Update"就可以进行更新了。
 
+### HelloWorld 代码：
+
+```toml title="Cargo.toml"
+[package]
+name = "hello-world"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+no-entrypoint = []
+
+[dependencies]
+borsh = "0.10.3"
+solana-program = "1.16.10"
+solana-sdk = "1.16.11"
+
+[dev-dependencies]
+solana-program-test = "1.16.11"
+
+[lib]
+name = "hello_world"
+crate-type = ["cdylib", "lib"]
+
+```
+
+```rust title="lib.rs"
+use borsh::{BorshDeserialize, BorshSerialize};
+use solana_program::{
+    account_info::{next_account_info, AccountInfo},
+    entrypoint,
+    entrypoint::ProgramResult,
+    msg,
+    program_error::ProgramError,
+    pubkey::Pubkey,
+};
+
+/// Define the type of state stored in accounts
+#[derive(BorshSerialize, BorshDeserialize, Debug)]
+pub struct GreetingAccount {
+    /// number of greetings
+    pub counter: u32,
+}
+
+// Declare and export the program's entrypoint
+entrypoint!(process_instruction);
+
+// Program entrypoint's implementation
+pub fn process_instruction(
+    program_id: &Pubkey, // Public key of the account the hello world program was loaded into
+    accounts: &[AccountInfo], // The account to say hello to
+    _instruction_data: &[u8], // Ignored, all helloworld instructions are hellos
+) -> ProgramResult {
+    // Iterating accounts is safer than indexing
+    let accounts_iter = &mut accounts.iter();
+
+    // Get the account to say hello to
+    let account = next_account_info(accounts_iter)?;
+
+    // The account must be owned by the program in order to modify its data
+    if account.owner != program_id {
+        msg!("Greeted account does not have the correct program id");
+        return Err(ProgramError::IncorrectProgramId);
+    }
+
+    // Increment and store the number of times the account has been greeted
+    let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
+
+    println!("greeting_account{:?}", greeting_account);
+
+    greeting_account.counter += 1;
+    // greeting_account.greeting = String::from("hello");
+
+    println!("greeting_account2{:?}", greeting_account);
+    println!("account.data.borrow_mut(){:?}", account.data.borrow_mut());
+    greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+
+    msg!("Greeted {} time(s)!", greeting_account.counter);
+
+    Ok(())
+}
+
+// Sanity tests
+#[cfg(test)]
+mod tests {
+    use crate::{entrypoint::process_instruction, processor::GreetingAccount};
+    use borsh::BorshDeserialize;
+    use solana_program::{account_info::AccountInfo, pubkey::Pubkey, stake_history::Epoch};
+    use std::mem;
+
+    // cargo test test_sanity -- --nocapture
+    #[test]
+    fn test_sanity() {
+        let program_id = Pubkey::default();
+        let instruction_data: Vec<u8> = Vec::new();
+        let key = Pubkey::default();
+        let is_signer = false;
+        let is_writable = true;
+        let mut lamports = 0;
+        let mut data = vec![0; mem::size_of::<u32>()];
+        let owner = Pubkey::default();
+        let executable = false;
+        let rent_epoch = Epoch::default();
+
+        println!("key: {:?}", key);
+        println!("data: {:?}", data);
+        println!("rent_epoch: {:?}", rent_epoch);
+
+        let account = AccountInfo::new(
+            &key,
+            is_signer,
+            is_writable,
+            &mut lamports,
+            &mut data,
+            &owner,
+            executable,
+            rent_epoch,
+        );
+
+        let accounts = vec![account];
+
+        assert_eq!(
+            GreetingAccount::try_from_slice(&accounts[0].data.borrow())
+                .unwrap()
+                .counter,
+            0
+        );
+        process_instruction(&program_id, &accounts, &instruction_data).unwrap();
+        assert_eq!(
+            GreetingAccount::try_from_slice(&accounts[0].data.borrow())
+                .unwrap()
+                .counter,
+            1
+        );
+        process_instruction(&program_id, &accounts, &instruction_data).unwrap();
+        assert_eq!(
+            GreetingAccount::try_from_slice(&accounts[0].data.borrow())
+                .unwrap()
+                .counter,
+            2
+        );
+    }
+
+    #[test]
+    fn test_slice() {
+        println!("teset slice with")
+    }
+}
+
+```
+
+```rust title="tests/lib.rs"
+use borsh::BorshDeserialize;
+use hello_world::processor::{process_instruction, GreetingAccount};
+use solana_program_test::*;
+use solana_sdk::{
+    account::Account,
+    instruction::{AccountMeta, Instruction},
+    pubkey::Pubkey,
+    signature::Signer,
+    transaction::Transaction,
+};
+use std::mem;
+
+#[tokio::test]
+async fn test_helloworld() {
+    let program_id = Pubkey::new_unique();
+    let greeted_pubkey = Pubkey::new_unique();
+
+    let mut program_test = ProgramTest::new(
+        "helloworld", // Run the BPF version with `cargo test-bpf`
+        program_id,
+        processor!(process_instruction), // Run the native version with `cargo test`
+    );
+    program_test.add_account(
+        greeted_pubkey,
+        Account {
+            lamports: 5,
+            data: vec![0_u8; mem::size_of::<u32>()],
+            owner: program_id,
+            ..Account::default()
+        },
+    );
+    let (mut banks_client, payer, recent_blockhash) = program_test.start().await;
+
+    // Verify account has zero greetings
+    let greeted_account = banks_client
+        .get_account(greeted_pubkey)
+        .await
+        .expect("get_account")
+        .expect("greeted_account not found");
+    assert_eq!(
+        GreetingAccount::try_from_slice(&greeted_account.data)
+            .unwrap()
+            .counter,
+        0
+    );
+
+    // Greet once
+    let mut transaction = Transaction::new_with_payer(
+        &[Instruction::new_with_bincode(
+            program_id,
+            &[0], // ignored but makes the instruction unique in the slot
+            vec![AccountMeta::new(greeted_pubkey, false)],
+        )],
+        Some(&payer.pubkey()),
+    );
+    transaction.sign(&[&payer], recent_blockhash);
+    banks_client.process_transaction(transaction).await.unwrap();
+
+    // Verify account has one greeting
+    let greeted_account = banks_client
+        .get_account(greeted_pubkey)
+        .await
+        .expect("get_account")
+        .expect("greeted_account not found");
+    assert_eq!(
+        GreetingAccount::try_from_slice(&greeted_account.data)
+            .unwrap()
+            .counter,
+        1
+    );
+
+    // Greet again
+    let mut transaction = Transaction::new_with_payer(
+        &[Instruction::new_with_bincode(
+            program_id,
+            &[1], // ignored but makes the instruction unique in the slot
+            vec![AccountMeta::new(greeted_pubkey, false)],
+        )],
+        Some(&payer.pubkey()),
+    );
+    transaction.sign(&[&payer], recent_blockhash);
+    banks_client.process_transaction(transaction).await.unwrap();
+
+    // Verify account has two greetings
+    let greeted_account = banks_client
+        .get_account(greeted_pubkey)
+        .await
+        .expect("get_account")
+        .expect("greeted_account not found");
+    assert_eq!(
+        GreetingAccount::try_from_slice(&greeted_account.data)
+            .unwrap()
+            .counter,
+        2
+    );
+}
+
+```
+
 ## 4、客户端开发
 
 回到 Explorer 界面，打开 client.ts，在里面贴上：
 
-```rust
-// Client
-console.log("My address:", pg.wallet.publicKey.toString());
-const balance = await pg.connection.getBalance(pg.wallet.publicKey);
-console.log(`My balance: ${balance / web3.LAMPORTS_PER_SOL} SOL`);
+```ts title="solana_tools/client/src/pages/Tutorial/HelloWorld/Native.ts"
+// No imports needed: web3, borsh, pg and more are globally available
+// ts-node --esm ./Native.ts
+// node --experimental-specifier-resolution=node --loader ts-node/esm ./Native.ts
+import assert from "assert";
+import * as borsh from "borsh";
+import web3, {
+    // clusterApiUrl,
+    SystemProgram,
+    Connection,
+    Keypair,
+    PublicKey,
+} from "@solana/web3.js";
 
-// create an empty transaction
-const transaction = new web3.Transaction();
+const PRIVATE_KEY = `[37,37,60,131,98,125,34,130,135,2,57,248,169,60,174,216,219,70,59,155,64,7,77,104,33,204,94,10,112,105,150,19,81,152,193,57,135,12,148,233,95,219,65,201,180,32,3,250,82,142,28,180,128,106,126,102,144,196,181,26,146,135,251,94]`;
 
-// add a hello world program instruction to the transaction
-transaction.add(
-new web3.TransactionInstruction({
-    keys: [],
-    programId: new web3.PublicKey(pg.PROGRAM_ID),
-}),
-);
+// keypair
+const secretKeyArray = JSON.parse(PRIVATE_KEY || "[]") as number[];
 
-console.log("Sending transaction...");
-const txHash = await web3.sendAndConfirmTransaction(
-    pg.connection,
-    transaction,
-    [pg.wallet.keypair],
-);
-console.log("Transaction sent with hash:", txHash);
+const PROGRAM_ID = "2VMQ2eVVwEUPtQzZES3goUjk7QjYcDM9N3RM8jUvms2V";
+
+// Step 1 连接到Solana网络 devnet
+// const devnet = clusterApiUrl("devnet");
+const devnet = "https://qn-devnet.solana.fm/";
+const connection = new Connection(devnet, "confirmed");
+
+// Step 2 创建者账号信息（private key）
+const signer = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
+
+const pg = {
+    connection,
+    PROGRAM_ID: new PublicKey(PROGRAM_ID),
+    wallet: {
+        keypair: signer,
+        publicKey: signer.publicKey,
+    },
+};
+/**
+ * The state of a greeting account managed by the hello world program
+ */
+class GreetingAccount {
+    counter = 0;
+    constructor(fields: { counter: number } | undefined = undefined) {
+        if (fields) {
+            this.counter = fields.counter;
+        }
+    }
+}
+
+/**
+ * Borsh schema definition for greeting accounts
+ */
+const GreetingSchema = new Map([
+    [GreetingAccount, { kind: "struct", fields: [["counter", "u32"]] }],
+]);
+
+// const GreetingSchema = {
+//     struct: {
+//         counter: "u32",
+//     },
+// };
+
+/**
+ * The expected size of each greeting account.
+ */
+const GREETING_SIZE = borsh.serialize(
+    GreetingSchema as unknown as borsh.Schema,
+    new GreetingAccount()
+).length;
+
+const test = async () => {
+    // Create greetings account instruction
+    const greetingAccountKp = new web3.Keypair();
+    const lamports = await pg.connection.getMinimumBalanceForRentExemption(
+        GREETING_SIZE
+    );
+    console.log(
+        "🚀 ~ file: Native.test.ts:81 ~ it ~ pg.PROGRAM_ID:",
+        pg.PROGRAM_ID
+    );
+    const createGreetingAccountIx = SystemProgram.createAccount({
+        fromPubkey: pg.wallet.publicKey,
+        lamports,
+        newAccountPubkey: greetingAccountKp.publicKey,
+        programId: pg.PROGRAM_ID,
+        space: GREETING_SIZE,
+    });
+
+    // Create greet instruction
+    const greetIx = new web3.TransactionInstruction({
+        keys: [
+            {
+                pubkey: greetingAccountKp.publicKey,
+                isSigner: false,
+                isWritable: true,
+            },
+        ],
+        programId: pg.PROGRAM_ID,
+    });
+
+    // Create transaction and add the instructions
+    const tx = new web3.Transaction();
+    tx.add(createGreetingAccountIx, greetIx);
+
+    // Send and confirm the transaction
+    const txHash = await web3.sendAndConfirmTransaction(pg.connection, tx, [
+        pg.wallet.keypair,
+        greetingAccountKp,
+    ]);
+    console.log(`Use 'solana confirm -v ${txHash}' to see the logs`);
+
+    // Fetch the greetings account
+    const greetingAccount = await pg.connection.getAccountInfo(
+        greetingAccountKp.publicKey
+    );
+
+    if (!greetingAccount) {
+        console.error("Don't get greeting information");
+        return;
+    }
+
+    // Deserialize the account data
+    const deserializedAccountData: any = borsh.deserialize(
+        GreetingSchema,
+        GreetingAccount,
+        greetingAccount.data
+    );
+
+    // Assertions
+    assert.equal(greetingAccount?.lamports, lamports);
+
+    assert(greetingAccount?.owner.equals(pg.PROGRAM_ID));
+
+    assert.deepEqual(greetingAccount?.data, Buffer.from([1, 0, 0, 0]));
+
+    assert.equal(deserializedAccountData?.counter, 1);
+};
+
+test();
 ```
 
 这里，不需要过多的 import，IDE 已经帮忙们做了 import。可以直接使用 web3。其中"pg.wallet" 就是我们的钱包，其 publicKey 属性就是钱包的地址。而 pg.connection 就如同我们用 web3 创建 的 connection 对象，这里共用 playground 的设置里面的 RPC 地址。

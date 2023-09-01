@@ -14,6 +14,7 @@ title: 3、Solana合约处理逻辑
 ## 1、结构化工程
 
 上面我们在同一个文件中，安排了一个合约的各个部分。当合约逻辑复杂的时候，我们可以将其一一拆分， 在书写的时候更清晰。来看 token 合约的结构：
+[HellowWorld 代码](https://github.com/iRoySwift/solana_tools/tree/master/programs/hello-world)
 
 ```zsh
 ├── src
@@ -35,20 +36,20 @@ title: 3、Solana合约处理逻辑
 
 "lib"作为 rust 工程的基本结构而存在，里面也可以定义一些脚手架工具函数。
 
-## 2、定义指令
+## 2、定义指令【instruction.rs】
 
 在 Rust 中，我们天然的可以用 enum 来模拟 Protobuf 中的 Message，或者 Oneof。
 
 这里我们专门用一个"instruction.rs"文件来定义各个指令，类似 pb 文件定义消息：
 
-```rust
+```rust title="Instruction.rs"
 /// Instructions supported by the generic Name Registry program
 #[derive(Clone, Debug, BorshSerialize, BorshDeserialize, PartialEq)]
-pub enum HelloWorldInstruction {
+pub enum GreetingAccountInstruction {
     /// Greeting to a account
     ///
     /// Accounts expected by this instruction:
-    ///   0. `[writeable]` the account to greet
+    ///     0. `[writable]` the account to greet
     ///
     Greeting {
         /// greet count
@@ -57,29 +58,25 @@ pub enum HelloWorldInstruction {
 }
 ```
 
-比如这里定义了"HelloWorldInstruction"指令集，其中有一个 "Greeting" 指令。 这个指令的 data 部分为包含“counter”成员的 struct。
+比如这里定义了"GreetingAccountInstruction"指令集，其中有一个 "Greeting" 指令。 这个指令的 data 部分为包含“counter”成员的 struct。
 
-因为这里通过 derive 来默认实现了 Borsh 的序列化和反序列化逻辑。当我们调用 "HelloWorldInstruction"的 try_to_vec 的方法的时候，就可以得到序列化后的结果。
+因为这里通过 derive 来默认实现了 Borsh 的序列化和反序列化逻辑。当我们调用 "GreetingAccountInstruction"的 try_to_vec 的方法的时候，就可以得到序列化后的结果。
 
 同时对于我们这个指令，还有配套使用的 Account，要将他们放入到 accounts 数组中。
 
 因此如果要在 Rust 里面构造这样的一个指令（通常在用 Rust 写合约调用的时候）：
 
-```rust
+```rust title="Instruction.rs"
 #[allow(clippy::too_many_arguments)]
 pub fn greeting(
-    helloworld_program_id: Pubkey,
-    instruction_data: HelloWorldInstruction,
+    program_id: Pubkey,
+    instraction_data: GreetingAccountInstruction,
     name_greeting: Pubkey,
 ) -> Result<Instruction, ProgramError> {
-    let data = instruction_data.try_to_vec().unwrap();
-    let mut accounts = vec![
-        AccountMeta::new(name_greeting, false),
-    ];
-
-
+    let data = instraction_data.try_to_vec().unwrap();
+    let mut accounts = vec![AccountMeta::new(name_greeting, false)];
     Ok(Instruction {
-        program_id: helloworld_program_id,
+        program_id,
         accounts,
         data,
     })
@@ -90,47 +87,49 @@ pub fn greeting(
 
 这个一般用于在 Rust 调用合约，或者写单元测试的时候。
 
-## 3、指令解析
+## 3、指令解析【processor.rs】
 
 上面我们构建了指令，当前端调用合约的时候，RPC 会讲相应的值转换成这里的 Instruction,那么我们要怎么去 理解他呢？按照上面的逻辑，我们执行反逻辑就可以了：
 
-```rust
+```rust title="process.rs"
+/// Program entrypoint's implementation
 pub fn process_instruction(
-    program_id: &Pubkey,
-    accounts: &[AccountInfo],
-    instruction_data: &[u8],
+    program_id: &Pubkey, // Public key of the account the hello world program was loaded into
+    accounts: &[AccountInfo], // The account to say hello to
+    instruction_data: &[u8], // Ignored, all helloworld instructions are hellos
 ) -> ProgramResult {
     msg!("Beginning processing");
-    let instruction = HelloWorldInstruction::try_from_slice(instruction_data)
+
+    let instruction = GreetingAccountInstruction::try_from_slice(instruction_data)
         .map_err(|_| ProgramError::InvalidInstructionData)?;
+
     msg!("Instruction unpacked");
 
     match instruction {
-        HelloWorldInstruction::Greeting {
-            counter,
-        } => {
+        GreetingAccountInstruction::Greeting { counter } => {
             msg!("Instruction: Greeting");
-            Processor::process_greeting(program_id, accounts, counter)?;
+            Self::process_greeting(program_id, accounts, counter)?;
         }
     }
+
     Ok(())
 }
 ```
 
-这里在合约入口里面，首先通过 Borsh 的 try_from_slice 既可以将其转换成对应的指令枚举结构。对应到这里就是 我们上面定义的 HelloWorldInstruction。
+这里在合约入口里面，首先通过 Borsh 的 try_from_slice 既可以将其转换成对应的指令枚举结构。对应到这里就是 我们上面定义的 GreetingAccountInstruction
 
 然后通过 match 语法，将其一一匹配。
 
 ```rust
 match instruction {
-    HelloWorldInstruction::Greeting {
+    GreetingAccountInstruction::Greeting {
         counter,
     }
 ```
 
 是一个解包语法糖。意思就是将 enum 中定义的无名 struct 的成员一一借用到这里的和成员同名的变量。方便后面使用。
 
-## 4、执行指令
+## 4、执行指令【processor.rs】
 
 在上面的解析中，我们已经得到了 accounts 的 AccountMeta 数组，以及要处理的 Create 的指令的三个成员变量。
 
@@ -151,7 +150,7 @@ pub fn process_greeting(
 ```rust
 let accounts_iter = &mut accounts.iter();
 
-    let greeting_account = next_account_info(accounts_iter)?;
+let greeting_account = next_account_info(accounts_iter)?;
 ```
 
 用 next_account_info 来依次取出 AccountInfo 对象。
@@ -181,14 +180,14 @@ pub struct AccountInfo<'a> {
 
 这里我们的逻辑中要修改 data 部分的内容。
 
-## 5、Model 层
+## 5、Model 层【state.rs】
 
 因为要修改 data 部分，而 data 部分本质上是一段二进制内容。因此我们这里类同指令部分。借助 Borsh 做序列化。 将结构化数据序列化成一段二进制数据，在存入这里的 data。
 
 ```rust
 /// Define the type of state stored in accounts
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
-pub struct GreetingInfo{
+pub struct GreetingAccount {
     /// number of greetings
     pub counter: u32,
 }
@@ -200,9 +199,9 @@ pub struct GreetingInfo{
 
 ```rust
 // Increment and store the number of times the account has been greeted
-    let mut greeting_info= GreetingInfo::try_from_slice(&greeting_account.data.borrow())?;
-    greeting_info.counter += 1;
-    greeting_info.serialize(&mut *greeting_account.data.borrow_mut())?;
+let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
+greeting_account.counter += 1;
+greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
 ```
 
 先将 data 部分反序列化出来，修改后，在序列化存回去。
