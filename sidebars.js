@@ -138,6 +138,22 @@ const sidebars = {
                                 "solana/solana-bootcamp/5、Solana合约开发Part1/solana-Contract-exersize-5",
                             ],
                         },
+                        {
+                            type: "category",
+                            label: "6、Solana合约开发Part.2",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/6、Solana合约开发Part2/solana-vscode-hello",
+                                "solana/solana-bootcamp/6、Solana合约开发Part2/solana-pda",
+                                "solana/solana-bootcamp/6、Solana合约开发Part2/solana-cpi",
+                                "solana/solana-bootcamp/6、Solana合约开发Part2/solana-var",
+                                "solana/solana-bootcamp/6、Solana合约开发Part2/solana-part2-exercise",
+                            ],
+                        },
                     ],
                 },
             ],
