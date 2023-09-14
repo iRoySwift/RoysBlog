@@ -100,7 +100,7 @@ Adding solana-program v1.16.5 to dependencies.
 
 在 src/lib.rs 文件中，填入如下合约代码：
 
-```rust
+```rust title="hello-world/program/src/lib.rs"
 use solana_program::{
     account_info::{AccountInfo, next_account_info},
     entrypoint,
@@ -234,6 +234,108 @@ tx:xosYkqqhHfD2xmcrqYXUQhkdTZiVUCMSc6QWazK25Li5Y4xebuG974vSvfVQCo9A7A7MZ6KQoNaKu
     }}
     />
 </BrowserWindow>
+```
+
+## JEST 测试
+
+```ts title="hello-world/ts/src/tests/Hello.test.ts"
+// No imports needed: web3, borsh, pg and more are globally available
+
+import {
+    clusterApiUrl,
+    Connection,
+    Keypair,
+    PublicKey,
+    Transaction,
+    TransactionInstruction,
+    sendAndConfirmTransaction,
+} from "@solana/web3.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const PROGRAM_ID = "9eMNGtayMEuNkzfdUYSw8k9msaPhFJG9Bi75wGQDvddR";
+
+// keypair
+const secretKeyArray = JSON.parse(process.env.PRIVATE_KEY || "[]") as number[];
+
+// Step 1 连接到Solana网络 devnet
+const devnet = clusterApiUrl("devnet");
+const connection = new Connection(process.env.DEVNET || devnet, "confirmed");
+
+// Step 2 创建者账号信息（private key）
+const signer = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
+
+const pg = {
+    connection,
+    PROGRAM_ID: new PublicKey(PROGRAM_ID),
+    wallet: {
+        keypair: signer,
+        publicKey: signer.publicKey,
+    },
+};
+
+describe("Test", () => {
+    it("greet", async () => {
+        // Create greetings account instruction
+
+        // Create greet instruction
+        const greetIx = new TransactionInstruction({
+            keys: [
+                {
+                    pubkey: pg.wallet.publicKey,
+                    isSigner: false,
+                    isWritable: true,
+                },
+            ],
+            programId: pg.PROGRAM_ID,
+        });
+
+        // Create transaction and add the instructions
+        const tx = new Transaction();
+        tx.add(greetIx);
+
+        // Send and confirm the transaction
+        const txHash = await sendAndConfirmTransaction(pg.connection, tx, [
+            pg.wallet.keypair,
+        ]);
+        console.log(`Use 'solana confirm -v ${txHash}' to see the logs`);
+
+        // Fetch the greetings account
+        const greetingAccount = await pg.connection.getAccountInfo(
+            pg.wallet.publicKey
+        );
+
+        if (!greetingAccount) {
+            console.error("Don't get greeting information");
+            return;
+        }
+    }, 20000);
+});
+```
+
+执行后可以得到：
+
+```zsh
+yarn test
+yarn run v1.22.19
+$ jest --forceExit
+  console.log
+    Use 'solana confirm -v 5gCPEdxGpNc1UG1wpSscLfb7sjiGxjwHPnn6zMVvyDHeJNxuKA5x39VQwy8hUuAHFSSgDm1w7kSKvVRTeGZLmMDn' to see the logs
+
+      at Object.<anonymous> (src/tests/Hello.test.ts:61:17)
+
+ PASS  src/tests/Hello.test.ts (9.951 s)
+  Test
+    ✓ greet (8905 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        10.029 s
+Ran all test suites.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+✨  Done in 12.46s.
 ```
 
 可以看到跟之前的 Playgroud 能够得到一样的效果。

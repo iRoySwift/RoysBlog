@@ -154,6 +154,22 @@ const sidebars = {
                                 "solana/solana-bootcamp/6、Solana合约开发Part2/solana-part2-exercise",
                             ],
                         },
+                        {
+                            type: "category",
+                            label: "7、Solana合约开发进阶",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/7、Solana合约开发进阶/solana-Contract-alts",
+                                "solana/solana-bootcamp/7、Solana合约开发进阶/solana-Contract-serializes-achor-protocol",
+                                "solana/solana-bootcamp/7、Solana合约开发进阶/solana-Anchor-development-framework",
+                                "solana/solana-bootcamp/7、Solana合约开发进阶/solana-Contract-Anchor-practice",
+                                "solana/solana-bootcamp/7、Solana合约开发进阶/solana-contact-exercise5",
+                            ],
+                        },
                     ],
                 },
             ],

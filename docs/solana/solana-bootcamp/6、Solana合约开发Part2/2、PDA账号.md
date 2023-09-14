@@ -79,24 +79,22 @@ PDA 的初衷是设计在执行跨程序调用时，程序可以通过调用 inv
 
 ```zsh
 spl-token create-token
-Creating token EUGfLUCBAMFvEDk1MZ2SbcZQ54mdczFyFkWVYvVVUcdF under program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+Creating token CQ68EPr2bHQ29bLZdHioLx5An35hfav1mqn36hG74ofH under program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
 
-Address:  EUGfLUCBAMFvEDk1MZ2SbcZQ54mdczFyFkWVYvVVUcdF
+Address:  CQ68EPr2bHQ29bLZdHioLx5An35hfav1mqn36hG74ofH
 Decimals:  9
 
-Signature: V32Eo2ZQttHRYzUqPgcvnGZGTzsPUDfJCJwxArCtvE372BSMtZQB7UqdJN3HUiJKg1oeQ8EYGuj5oMnFkUmcPcq
 ```
 
 然后创建我们自己账号在这个 mint 下的 ATA 账号：
 
 ```zsh
-spl-token create-account EUGfLUCBAMFvEDk1MZ2SbcZQ54mdczFyFkWVYvVVUcdF
-Creating account 7X8RKbXhxGATEHwXPVWvZFDL5yZwgf9YyActE93wyhku
+spl-token create-account CQ68EPr2bHQ29bLZdHioLx5An35hfav1mqn36hG74ofH
+Creating account 4pfQFsxJqaRG1bgWuD8S7cX8Qi1nck7zH5p6ZTdoSbD2
 
-Signature: 67JaFzPF6umPu54Sh7xd8V78ECVd8iEtiR7GDLmbXEerXoprAR7vNPcekaahnxgYprbWKnhsyR98omhfjZ8qnZ1b
 ```
 
-这里的 7X8RKbXhxGATEHwXPVWvZFDL5yZwgf9YyActE93wyhku 账号就是我们的地址子在 EUGfLUCBAMFvEDk1MZ2SbcZQ54mdczFyFkWVYvVVUcdF token 下的 ATA 账号。他是怎么计算得来的呢？
+这里的 4pfQFsxJqaRG1bgWuD8S7cX8Qi1nck7zH5p6ZTdoSbD2 账号就是我们的地址子在 CQ68EPr2bHQ29bLZdHioLx5An35hfav1mqn36hG74ofH token 下的 ATA 账号。他是怎么计算得来的呢？
 
 ATA 地址是用 SOL 钱包地址，目标代币地址以及 SPL-Token 地址作为 Seed，在 SPL-Token 合约下生成的。 所以对于 Rust 的调用是：
 
@@ -113,39 +111,131 @@ Pubkey::find_program_address(
 
 我们写一个简单的 rust 程序来验证。
 
-```rs
+```rs title="solana-program-part2/compare-ts-rust/cli/tests/pda.rs"
 use std::str::FromStr;
 
 use solana_program::pubkey::Pubkey;
 
+// const PROGRAM_ID: &str = "9eMNGtayMEuNkzfdUYSw8k9msaPhFJG9Bi75wGQDvddR";
+const MINT: &str = "CQ68EPr2bHQ29bLZdHioLx5An35hfav1mqn36hG74ofH";
+const WALLET: &str = "6VX7znCYutpN4z4kyRA6B8uXiK6iPN799efjGr8m3rFX";
+const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+const ASSOCIATED_TOKEN_PROGRAM_ID: &str = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
 
-fn main() {
-
-    let spl_token_addr : Pubkey= Pubkey::from_str("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA").unwrap();
-    let token_addr: Pubkey = Pubkey::from_str("EUGfLUCBAMFvEDk1MZ2SbcZQ54mdczFyFkWVYvVVUcdF").unwrap();
-    let sol_addr: Pubkey = Pubkey::from_str("5pWae6RxD3zrYzBmPTMYo1LZ5vef3vfWH6iV3s8n6ZRG").unwrap();
-    let ata_program_addr: Pubkey = Pubkey::from_str("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL").unwrap();
-
+// cargo test -p compare-ts-rust --test get_associated_token_address_sync
+#[test]
+fn get_associated_token_address_sync() {
+    let token_mint_address = Pubkey::from_str(MINT).unwrap();
+    let wallet_address = Pubkey::from_str(WALLET).unwrap();
+    let token_program_id = Pubkey::from_str(TOKEN_PROGRAM_ID).unwrap();
+    let associated_token_program_id = Pubkey::from_str(ASSOCIATED_TOKEN_PROGRAM_ID).unwrap();
     let seeds = [
-        &sol_addr.to_bytes()[..],
-        &spl_token_addr.to_bytes()[..],
-        &token_addr.to_bytes()[..],
+        &wallet_address.to_bytes()[..],
+        &token_program_id.to_bytes()[..],
+        &token_mint_address.to_bytes()[..],
     ];
-    let (ata_addr ,_seed )= Pubkey::find_program_address(&seeds[..], &ata_program_addr);
-
-
-    println!("ata_addr is {}", ata_addr);
+    let (ata_addr, _seed) = Pubkey::find_program_address(&seeds[..], &associated_token_program_id);
+    assert_eq!(
+        ata_addr,
+        Pubkey::from_str("4pfQFsxJqaRG1bgWuD8S7cX8Qi1nck7zH5p6ZTdoSbD2").unwrap()
+    );
 }
+
 ```
 
 运行一下：
 
 ```zsh
-cargo run
-Compiling ata v0.1.0 (./Solana-Asia-Summer-2023/s101/Solana-Program-Part2/demo/ata)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.65s
-    Running `target/debug/ata`
-ata_addr is 7X8RKbXhxGATEHwXPVWvZFDL5yZwgf9YyActE93wyhku
+cargo test -p compare-ts-rust --test pda
+   Compiling compare-ts-rust v0.1.0 (/Users/roy/Project/Solana/solana-tutorial/compare-ts-rust/cli)
+    Finished test [unoptimized + debuginfo] target(s) in 0.64s
+     Running tests/pda.rs (target/debug/deps/pda-7347013359768b10)
+
+running 1 test
+test get_associated_token_address_sync ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 可以看到这里的 ata 地址和我们的命令行得出来的是一致的。
+
+我们再写一个 ts 代码验证一下
+
+```ts
+import { PublicKey } from "@solana/web3.js";
+import {
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+
+/**
+ * Get the address of the associated token account for a given mint and owner
+ *
+ * @param mint                     Token mint account
+ * @param owner                    Owner of the new account
+ * @param allowOwnerOffCurve       Allow the owner account to be a PDA (Program Derived Address)
+ * @param programId                SPL Token program account
+ * @param associatedTokenProgramId SPL Associated Token program account
+ *
+ * @return Address of the associated token account
+ */
+export function getAssociatedTokenAddressSync(
+    mint: PublicKey,
+    owner: PublicKey,
+    allowOwnerOffCurve = false,
+    programId = TOKEN_PROGRAM_ID,
+    associatedTokenProgramId = ASSOCIATED_TOKEN_PROGRAM_ID
+): PublicKey {
+    // if (!allowOwnerOffCurve && !PublicKey.isOnCurve(owner.toBuffer()))
+    // throw new TokenOwnerOffCurveError();
+
+    const [address] = PublicKey.findProgramAddressSync(
+        [owner.toBuffer(), programId.toBuffer(), mint.toBuffer()],
+        associatedTokenProgramId
+    );
+
+    return address;
+}
+```
+
+```ts title="solana-program-part2/compare-ts-rust/ts/src/tests/PDA.test.ts"
+import { describe, it } from "node:test";
+import dotenv from "dotenv";
+import { Connection, Keypair, PublicKey, clusterApiUrl } from "@solana/web3.js";
+import { getAssociatedTokenAddressSync } from "./../utils/PDA.js";
+import assert from "assert";
+
+dotenv.config();
+
+const PROGRAM_ID = "9eMNGtayMEuNkzfdUYSw8k9msaPhFJG9Bi75wGQDvddR";
+const mint = "CQ68EPr2bHQ29bLZdHioLx5An35hfav1mqn36hG74ofH";
+
+// keypair
+const secretKeyArray = JSON.parse(process.env.PRIVATE_KEY || "[]") as number[];
+
+// Step 1 连接到Solana网络 devnet
+const devnet = clusterApiUrl("devnet");
+const connection = new Connection(process.env.DEVNET || devnet, "confirmed");
+
+// Step 2 创建者账号信息（private key）
+const signer = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
+
+const pg = {
+    connection,
+    PROGRAM_ID: new PublicKey(PROGRAM_ID),
+    wallet: {
+        keypair: signer,
+        publicKey: signer.publicKey,
+    },
+};
+
+describe("Test PDA", () => {
+    it("findProgramAddress", () => {
+        let ata = getAssociatedTokenAddressSync(
+            new PublicKey(mint),
+            pg.wallet.publicKey
+        );
+        assert.equal(ata, "4pfQFsxJqaRG1bgWuD8S7cX8Qi1nck7zH5p6ZTdoSbD2");
+    });
+});
+```

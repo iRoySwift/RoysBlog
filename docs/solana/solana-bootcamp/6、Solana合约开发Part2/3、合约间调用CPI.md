@@ -29,14 +29,14 @@ Solana 运行时允许程序通过称为跨程序调用的机制相互调用。 
 
 ```rs
 use solana_program::{
-    account_info::{AccountInfo, next_account_info},
+    account_info::{next_account_info, AccountInfo},
     entrypoint,
     entrypoint::ProgramResult,
+    instruction::{AccountMeta, Instruction},
+    msg,
+    program::invoke,
     pubkey::Pubkey,
-    instruction,
-    msg, program::invoke,
 };
-
 
 // Declare and export the program's entrypoint
 entrypoint!(process_instruction);
@@ -47,32 +47,25 @@ pub fn process_instruction(
     accounts: &[AccountInfo], // The account to say hello to
     _instruction_data: &[u8], // Ignored, all helloworld instructions are hellos
 ) -> ProgramResult {
-
     // Iterating accounts is safer than indexing
     let accounts_iter = &mut accounts.iter();
 
     // Get the account to say hello to
     let account = next_account_info(accounts_iter)?;
-    let helloworld = next_account_info(accounts_iter)?;
+    let helloworld_program_id = next_account_info(accounts_iter)?;
 
-    msg!("invoke program entrypoint from {}", account.key);
+    msg!("invoke helloworld program entrypoint from {}", account.key);
 
-    let account_metas = vec![
-        instruction::AccountMeta::new(*account.key, true),
-    ];
-
-    let instruction = instruction::Instruction::new_with_bytes(
-        *helloworld.key,
+    let instruction = Instruction::new_with_bytes(
+        *helloworld_program_id.key,
         "hello".as_bytes(),
-        account_metas,
+        vec![AccountMeta::new(*account.key, true)],
     );
 
-    let account_infos = [
-        account.clone(),
-    ];
-
+    let account_infos = [account.clone()];
     invoke(&instruction, &account_infos[..])
 }
+
 ```
 
 这里，从输入中得到两个 Account，第一个是调用第二个的参数，第二个是 helloworld 的合约的地址。
@@ -123,58 +116,66 @@ pub struct AccountInfo<'a> {
 ```rs
 use std::str::FromStr;
 
-use solana_sdk::signature::Signer;
-use solana_rpc_client::rpc_client;
-use solana_sdk::signer::keypair;
-use solana_sdk::transaction;
-use solana_program::instruction;
-use solana_program::pubkey;
+use solana_program::{
+    instruction::{AccountMeta, Instruction},
+    pubkey::Pubkey,
+};
+use solana_rpc_client::rpc_client::RpcClient;
+use solana_sdk::{signature::Keypair, signer::Signer, transaction::Transaction};
 
-const RPC_ADDR: &str = "https://api.devnet.solana.com";
+const HELLOWORLD_PROGRAM_ID: &str = "9eMNGtayMEuNkzfdUYSw8k9msaPhFJG9Bi75wGQDvddR";
+const INVOKE_PROGRAM_ID: &str = "D4saMj1EGsMCkRVmf46iHSmpTH7GzACvBdZF4WLvbE1r";
+const DEV_NET: &str = "https://qn-devnet.solana.fm";
+const PRIVATE_KEY: [u8; 64] = [
+    37, 37, 60, 131, 98, 125, 34, 130, 135, 2, 57, 248, 169, 60, 174, 216, 219, 70, 59, 155, 64, 7,
+    77, 104, 33, 204, 94, 10, 112, 105, 150, 19, 81, 152, 193, 57, 135, 12, 148, 233, 95, 219, 65,
+    201, 180, 32, 3, 250, 82, 142, 28, 180, 128, 106, 126, 102, 144, 196, 181, 26, 146, 135, 251,
+    94,
+];
 
+pub fn invoke_program() {
+    // Step 1 连接到Solana网络 devnet
+    let client = RpcClient::new(DEV_NET);
 
-fn main() {
-    let helloworld = pubkey::Pubkey::from_str("FbLTBNZmc77xJpf4whkr4t7vdctjsk8DBkfuksqtQ7g8").unwrap();
-    let invoke= pubkey::Pubkey::from_str("CjN2fRAzLxJnYrNM8X3cbJLiVR57EzXNrK1HBNR2QXPa").unwrap();
+    // Step 2 创建者账号信息（private key）
+    let hello_program_id = Pubkey::from_str(HELLOWORLD_PROGRAM_ID).unwrap();
+    let invoke_program_id = Pubkey::from_str(INVOKE_PROGRAM_ID).unwrap();
+    let signer = Keypair::from_bytes(&PRIVATE_KEY).unwrap();
 
-    let me = keypair::Keypair::from_base58_string("VtqQi7BBnvnkkBefXigNdSwjywsTj2JNSFT82sNtQ3qcmcQ96SnLqtsmK44eCsVqgEX2YBMTmcvov3YfA2z7xs8");
-    println!("me is {}", me.pubkey());
-
-    let client = rpc_client::RpcClient::new(RPC_ADDR);
-
-    let account_metas = vec![
-        instruction::AccountMeta::new(me.pubkey(), true),
-        instruction::AccountMeta::new_readonly(helloworld, false),
-    ];
-
-    let instruction = instruction::Instruction::new_with_bytes(
-        invoke,
+    let instraction = Instruction::new_with_bytes(
+        invoke_program_id,
         "hello".as_bytes(),
-        account_metas,
+        vec![
+            AccountMeta::new(signer.pubkey(), true),
+            AccountMeta::new_readonly(hello_program_id, false),
+        ],
     );
-    let ixs = vec![instruction];
+    let ixs = vec![instraction];
 
-    let latest_blockhash = client.get_latest_blockhash().unwrap();
-    let sig = client.send_and_confirm_transaction(&transaction::Transaction::new_signed_with_payer(
+    // Latest hash
+    let recent_blockhash = client.get_latest_blockhash().unwrap();
+    let tx = Transaction::new_signed_with_payer(
         &ixs,
-        Some(&me.pubkey()),
-        &[&me],
-        latest_blockhash,
-    )).unwrap();
+        Some(&signer.pubkey()),
+        &[&signer],
+        recent_blockhash,
+    );
 
-    println!("tx:{}", sig);
+    // send transaction
+    let sig = client.send_and_confirm_transaction(&tx).unwrap();
+    println!("Use 'solana confirm -v {sig}' to see the logs");
 }
+
 ```
 
 和前面的调用一样，主要传递了两个 AccountMeta。构建执行：
 
 ```zsh
 cargo run
-Compiling cli v0.1.0 (./Solana-Asia-Summer-2023/s101/Solana-Program-Part2/demo/invoke/cli)
-    Finished dev [unoptimized + debuginfo] target(s) in 2.48s
-    Running `target/debug/cli`
-me is 5pWae6RxD3zrYzBmPTMYo1LZ5vef3vfWH6iV3s8n6ZRG
-tx:3neCUu9cQHLuZvbwiDzneFPztos3PsmNuvytSdzFUz5ix4NpK8GmgDcGvsqSPzAdmnMhTpmzhFfgNZGeRYQn3zfh
+   Compiling invoke-helloworld-cli v0.1.0 (/Users/roy/Project/Solana/solana-tutorial/solana-program-part2/invoke-helloworld/cli)
+    Finished dev [unoptimized + debuginfo] target(s) in 3.03s
+     Running `/Users/roy/Project/Solana/solana-tutorial/target/debug/invoke-helloworld-cli`
+Use 'solana confirm -v 519ha2oS2EFKTDBvkHpYz2AMAvqGKmAoV6ZrsYZ4Tiox7uhTBabcYdtD5dagc2RXm62Thecr3iSuhcUqohVAboUR' to see the logs
 ```
 
 产看这个交易的浏览器:
@@ -201,7 +202,8 @@ invoke_signed 和 invoke 类似，都是在合约中调用其他合约的方法�
 
 -   一个地址
 -   一个 Seed
-    通过 find_program_address 可以得到 PDA 地址，以及一个 Bump 种子。
+
+通过 find_program_address 可以得到 PDA 地址，以及一个 Bump 种子。
 
 这里传入的地址，将有权限校验该 PDA 地址的签名，就可以认为这个合约地址，相当于 PDA 账号的私钥。
 
