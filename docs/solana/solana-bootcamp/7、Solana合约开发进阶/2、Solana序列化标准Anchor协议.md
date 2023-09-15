@@ -200,8 +200,8 @@ describe("hellowolrd", () => {
     <ThemedImage
     alt="Docusaurus themed image"
     sources={{
-        light: useBaseUrl('/img/solana/top_test.png'),
-        dark: useBaseUrl('/img/solana/top_test.png'),
+        light: useBaseUrl('/img/solana/top_test.jpg'),
+        dark: useBaseUrl('/img/solana/top_test.jpg'),
     }}
     />
 </BrowserWindow>
