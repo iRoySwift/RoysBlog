@@ -100,7 +100,7 @@ Adding solana-program v1.16.5 to dependencies.
 
 在 src/lib.rs 文件中，填入如下合约代码：
 
-```rust title="hello-world/program/src/lib.rs"
+```rust title="hello-world/native/program/src/lib.rs"
 use solana_program::{
     account_info::{AccountInfo, next_account_info},
     entrypoint,
@@ -167,7 +167,7 @@ Created binary (application) `cli` package
 
 然后再 main.rs 里面添加：
 
-```rs
+```rs title="hello-world/native/cli/src/main.rs"
 use std::str::FromStr;
 
 use solana_sdk::signature::Signer;
@@ -238,7 +238,7 @@ tx:xosYkqqhHfD2xmcrqYXUQhkdTZiVUCMSc6QWazK25Li5Y4xebuG974vSvfVQCo9A7A7MZ6KQoNaKu
 
 ## JEST 测试
 
-```ts title="hello-world/ts/src/tests/Hello.test.ts"
+```ts title="hello-world/native/src/tests/Hello.test.ts"
 // No imports needed: web3, borsh, pg and more are globally available
 
 import {

@@ -195,6 +195,55 @@ describe("hellowolrd", () => {
 
 那么合约又是怎么来运行的呢？这里其实 anchor 拉起了一个 solana 的本地节点，并通过".anchor/test-ledger"下的 genesis.json 文件作为初始节点信息。
 
+```zsh
+4
+
+Run solana-test-validator in a separate terminal.
+
+Then run anchor test --skip-local-validator whenever you wanna test your program.
+
+You can create an alias if this gets tedious. e.g. alias anchortest="anchor test --skip-local-validator
+```
+
+```zsh
+anchor test --skip-local-validator
+warning: unused variable: `ctx`
+ --> programs/helloworld/src/lib.rs:9:23
+  |
+9 |     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+  |                       ^^^ help: if this is intentional, prefix it with an underscore: `_ctx`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: `helloworld` (lib) generated 1 warning (run `cargo fix --lib -p helloworld` to apply 1 suggestion)
+    Finished release [optimized] target(s) in 0.43s
+Deploying cluster: http://localhost:8899
+Upgrade authority: /Users/roy/.config/solana/id.json
+Deploying program "helloworld"...
+Program path: /Users/roy/Project/Solana/demo/helloworld/target/deploy/helloworld.so...
+Program Id: Dwwno9cpgrbXFFEdJhMt9FB9TJKnJ5en31y433M11oPQ
+
+Deploy success
+
+Found a 'test' script in the Anchor.toml. Running it as a test suite!
+
+Running test suite: "/Users/roy/Project/Solana/demo/helloworld/Anchor.toml"
+
+yarn run v1.22.19
+warning package.json: No license field
+$ /Users/roy/Project/Solana/demo/helloworld/node_modules/.bin/ts-mocha -p ./tsconfig.json -t 1000000 'tests/**/*.ts'
+
+
+  helloworld
+Your transaction signature 38Kgfdmw8rMJKE4vZgCWru8T5EPSM8kZ92R1WvVCvaPory6u8eXxnE796ChWTQywx4UdWKUmEfbP5iyzQPcRxebZ
+    ✔ Is initialized! (187ms)
+
+
+  1 passing (190ms)
+
+✨  Done in 3.27s.
+```
+
 ```mdx-code-block
 <BrowserWindow minHeight={240} >
     <ThemedImage
@@ -244,8 +293,8 @@ Deploy success
     <ThemedImage
     alt="Docusaurus themed image"
     sources={{
-        light: useBaseUrl('/img/solana/helloworld2.png'),
-        dark: useBaseUrl('/img/solana/helloworld2.png'),
+        light: useBaseUrl('/img/solana/hellowolrd2.png'),
+        dark: useBaseUrl('/img/solana/hellowolrd2.png'),
     }}
     />
 </BrowserWindow>

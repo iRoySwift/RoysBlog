@@ -170,6 +170,20 @@ const sidebars = {
                                 "solana/solana-bootcamp/7、Solana合约开发进阶/solana-contact-exercise5",
                             ],
                         },
+                        {
+                            type: "category",
+                            label: "8、Solana DApp开发实践 DeFi & NFT",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/8、Solana DApp开发实践 DeFi & NFT/solana-bootcamp-Contract-read",
+                                "solana/solana-bootcamp/8、Solana DApp开发实践 DeFi & NFT/solana-bootcamp-Contract-metaplex",
+                                "solana/solana-bootcamp/8、Solana DApp开发实践 DeFi & NFT/solana-bootcamp-defi-exercise3",
+                            ],
+                        },
                     ],
                 },
             ],

@@ -292,3 +292,5 @@ https://explorer.solana.com/tx/4DFETLv7bExTESy4cGtJ1A7Vd4G8WK2f48hCAhB33i2bc9Kuo
     />
 </BrowserWindow>
 ```
+
+[参考代码](https://github.com/iRoySwift/solana-tutorial/tree/main/solana-contract-development-advanced/solana-contract-alts/ts)
