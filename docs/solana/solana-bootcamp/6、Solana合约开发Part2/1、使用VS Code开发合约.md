@@ -339,3 +339,17 @@ Force exiting Jest: Have you considered using `--detectOpenHandles` to detect as
 ```
 
 可以看到跟之前的 Playgroud 能够得到一样的效果。
+
+## 日志查看
+
+### 网络设置
+
+```zsh
+solana config set --url https://qn-devnet.solana.fm
+Config File: /Users/roy/.config/solana/cli/config.yml
+RPC URL: https://qn-devnet.solana.fm
+WebSocket URL: wss://qn-devnet.solana.fm/ (computed)
+Keypair Path: /Users/roy/.config/solana/id.json
+Commitment: confirmed
+
+```

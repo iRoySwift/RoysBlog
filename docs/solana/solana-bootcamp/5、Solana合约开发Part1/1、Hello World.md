@@ -567,3 +567,17 @@ Transaction sent with hash: 3XcaF6zpXthBQ2mih7DdVBuvwXi7L6Wy4rCHzgwHEaNsqMDNRGC5
     />
 </BrowserWindow>
 ```
+
+## 5、日志查看
+
+### 网络设置
+
+```zsh
+solana config set --url localhost
+Config File: /Users/roy/.config/solana/cli/config.yml
+RPC URL: http://localhost:8899
+WebSocket URL: ws://localhost:8900/ (computed)
+Keypair Path: /Users/roy/.config/solana/id.json
+Commitment: confirmed
+
+```

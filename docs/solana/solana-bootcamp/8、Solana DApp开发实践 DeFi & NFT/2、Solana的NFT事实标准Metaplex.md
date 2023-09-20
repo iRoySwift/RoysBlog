@@ -169,7 +169,7 @@ Collection NFT 和常规 NFT 之间的区别在于，前者提供的信息将用
 </BrowserWindow>
 ```
 
-我们可以在浏览器中看到对应的这里的 "MINT Account" BBDajxrF4KJdmXredbz8BtCBF5b5HFrAPxX5xqtysAJC
+我们可以在浏览器中看到对应的这里的 "MINT Account" [BBDajxrF4KJdmXredbz8BtCBF5b5HFrAPxX5xqtysAJC](https://solscan.io/token/BBDajxrF4KJdmXredbz8BtCBF5b5HFrAPxX5xqtysAJC#holders)
 
 ```mdx-code-block
 <BrowserWindow minHeight={240} >
@@ -183,7 +183,7 @@ Collection NFT 和常规 NFT 之间的区别在于，前者提供的信息将用
 </BrowserWindow>
 ```
 
-而对应的真实"SPL Token Account"为 BVhF7uWD4LYKZmwWMk7KwohZbC7vUNzQPD953h5atjb8
+而对应的真实"SPL Token Account"为 [BVhF7uWD4LYKZmwWMk7KwohZbC7vUNzQPD953h5atjb8](https://solscan.io/account/BVhF7uWD4LYKZmwWMk7KwohZbC7vUNzQPD953h5atjb8)
 
 ```mdx-code-block
 <BrowserWindow minHeight={240} >
@@ -197,7 +197,7 @@ Collection NFT 和常规 NFT 之间的区别在于，前者提供的信息将用
 </BrowserWindow>
 ```
 
-对应的 Collection 为 1yPMtWU5aqcF72RdyRD5yipmcMRC8NGNK59NvYubLkZ 这个 Collection 的 Mint Account:
+对应的 Collection 为 [1yPMtWU5aqcF72RdyRD5yipmcMRC8NGNK59NvYubLkZ](https://solscan.io/token/1yPMtWU5aqcF72RdyRD5yipmcMRC8NGNK59NvYubLkZ) 这个 Collection 的 Mint Account:
 
 ```mdx-code-block
 <BrowserWindow minHeight={240} >
