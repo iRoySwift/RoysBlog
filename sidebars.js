@@ -184,6 +184,20 @@ const sidebars = {
                                 "solana/solana-bootcamp/8、Solana DApp开发实践 DeFi & NFT/solana-bootcamp-defi-exercise3",
                             ],
                         },
+                        {
+                            type: "category",
+                            label: "9、Solana合约安全",
+                            link: {
+                                type: "generated-index",
+                                description: "Solana中文开发教程",
+                                keywords: ["Solana"],
+                            },
+                            items: [
+                                "solana/solana-bootcamp/9、Solana合约安全/solana-bootcamp-cashio",
+                                "solana/solana-bootcamp/9、Solana合约安全/solana-bootcamp-classical-scientist-means",
+                                "solana/solana-bootcamp/9、Solana合约安全/solana-bootcamp-contact-safe",
+                            ],
+                        },
                     ],
                 },
             ],
