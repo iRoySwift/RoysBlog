@@ -4,13 +4,13 @@ id: git-tutorial
 title: Git教程
 ---
 
-## 1、查看 git 配置
+## 1. 查看 git 配置
 
 ```zsh
 git config --list --查看配置
 ```
 
-## 2、切换本地仓库源
+## 2. 切换本地仓库源
 
 ```zsh
 git remote －v
@@ -20,14 +20,14 @@ git remote add origin [url]
 git branch --set-upstream-to=origin/<branch> <branch>
 ```
 
-## 3、藏存本地代码 stash
+## 3. 藏存本地代码 stash
 
 ```zsh
 git stash
 git stash drop stash@{1}
 ```
 
-## 4、切换分支
+## 4. 切换分支
 
 1. 切换新分支并追踪远程分支
 
@@ -35,14 +35,14 @@ git stash drop stash@{1}
 $ git checkout -b <branch> --track <remote>/<branch>
 ```
 
-## 5、删除分支
+## 5. 删除分支
 
 ```zsh
 git branch --delete --force <branch>
 
 ```
 
-## 6.合并本地仓库与远程仓库
+## 6. 合并本地仓库与远程仓库
 
 ```zsh
 git remote add <name> <URL>
@@ -60,7 +60,7 @@ git push
         To push the current branch and set the remote as upstream, use
 
 ```zsh
-    git checkout -b <new_branch> --no-track <branch>
+    git checkout -b <new_branch> --no-track <origin/branch>
     git push --set-upstream origin <new_branch>
 ```
 
