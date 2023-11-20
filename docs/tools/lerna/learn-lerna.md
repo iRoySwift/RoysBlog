@@ -4,7 +4,7 @@ id: learn-lerna
 title: 学习Lerna
 ---
 
-````mdx-code-block
+```mdx-code-block
 export const Logo = () =>{
   return (
     <div style={{
@@ -24,7 +24,7 @@ export const Logo = () =>{
   )
 }
 
-````
+```
 
 <Logo />
 
@@ -159,6 +159,32 @@ src/
 ```
 
 ## 命令
+
+:::warning
+
+替换 lerna bootstrap 为 npm install(或 yarn/ pnpm)。如果您已经在之前调用过的工作流程中的某个位置执行了包管理器的安装命令 lerna bootstrap，那么您可以将其删除。lerna link 可以删除，因为链接步骤现在由包管理器在 npm install.
+
+替换您 lerna add
+lerna add 大部分可以用 npm install(或 yarn/ pnpm) 的变体替换。最常见的用例 lerna add 是向工作区中的单个包添加单个依赖项。该命令如下所示：
+
+```zsh
+lerna add <dependency> --scope <package>
+```
+
+并且可以直接替换为：
+
+````zsh
+npm install <dependency> -w <package>
+```
+
+该-w标志告诉 npm 仅在指定的工作区包中安装依赖项<package>，类似于--scopeLerna 的选项。
+
+如果需要向多个包添加依赖项，可以-w多次使用该选项：
+```zsh
+npm install <dependency> -w <package1> -w <package2>
+````
+
+:::
 
 -   `lerna init`
 
@@ -331,7 +357,9 @@ lerna create
 </summary>
 
 ```
+
 $ lerna create <name> [loc]
+
 ```
 
 -   name 是模块的名称（必填项，可包含作用域，如 @uedlinker/module-a），必须唯一且可以发布（npm 仓库中无重名已发布包）
@@ -347,6 +375,7 @@ $ lerna create <name> [loc]
       ┃            ┗━ package.json
       ┣━ lerna.json
       ┗━ package.json
+
 ```
 
 </details>
@@ -358,7 +387,9 @@ lerna import
 </summary>
 
 ```
+
 lerna import <pathToRepo>
+
 ```
 
 -   将本地路径 `<pathToRepo>` 中的软件包导入（import） `packages/<directory-name>` 中并提交 commit。
@@ -528,4 +559,7 @@ Lerna 不会发布在 `package.json` 中将 `private` 属性设置为 `true` 的
 -   [graycoreio/daffodil](https://github.com/graycoreio/daffodil)
 -   [typescript-eslint/typescript-eslint](https://github.com/typescript-eslint/typescript-eslint)
 -   [stoplightio/prism](https://github.com/stoplightio/prism)
-````
+
+```
+
+```
