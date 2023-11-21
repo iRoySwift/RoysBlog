@@ -27,9 +27,9 @@ jobs:
             - uses: actions/setup-node@v3
               with:
                   node-version: 18.x
-                  cache: yarn
+                  cache: pnpm
 
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              run: pnpm install --frozen-lockfile
             - name: Test build website
-              run: yarn build
+              run: pnpm build
