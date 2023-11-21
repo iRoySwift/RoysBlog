@@ -126,7 +126,7 @@ anchor init helloworld
     -   合约在本地网络上的地址 ([programs.localnet])
     -   合约可以推送到的注册表 ([registry])
     -   测试中使用的 provider ([provider])
-    -   通过 Anchor 执行的脚本 ([scripts])。 测试脚本在运行锚点测试时运行。 可以使用 anchor run <script_name>运行自己的脚本。
+    -   通过 Anchor 执行的脚本 ([scripts])。 测试脚本在运行锚点测试时运行。 可以使用 anchor run `<script_name>`运行自己的脚本。
 
 ## 构建工程
 

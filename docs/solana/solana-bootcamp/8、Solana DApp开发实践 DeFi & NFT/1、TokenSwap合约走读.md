@@ -367,9 +367,9 @@ pub struct SwapCurve {
 这里 CurveCalculator 主要有四种实现：
 
 -   impl CurveCalculator for ConstantPriceCurve /// Constant price curve always returns 1:1
--   impl CurveCalculator for ConstantProductCurve /// Constant product swap ensures x \_ y = constant
+-   impl CurveCalculator for ConstantProductCurve /// Constant product swap ensures x \_ y `=` constant
 -   impl CurveCalculator for StableCurve /// Stable curve
--   impl CurveCalculator for OffsetCurve /// Constant product swap ensures token a \_ (token b + offset) = constant /// This is guaranteed to work for all values such that: /// - 1 <= source_amount <= u64::MAX /// - 1 <= (swap_source_amount \* (swap_destination_amount + token_b_offset)) <= u128::MAX /// If the offset and token B are both close to u64::MAX, there can be /// overflow errors with the invariant.
+-   impl CurveCalculator for OffsetCurve /// Constant product swap ensures token a \_ (token b + offset) `=` constant /// This is guaranteed to work for all values such that: /// - 1 `<=` source_amount `<=` u64::MAX /// - 1 `<=` (swap_source_amount \* (swap_destination_amount + token_b_offset)) `<=` u128::MAX /// If the offset and token B are both close to u64::MAX, there can be /// overflow errors with the invariant.
 
     类比到最容易理解的 UniV2，我们这里主要来看"ConstantProductCurve"。
 
