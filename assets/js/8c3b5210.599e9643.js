@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[6911],{3690:l=>{l.exports=JSON.parse('{"label":"Wallet","permalink":"/blog/tags/wallet","allTagsPath":"/blog/tags","count":1}')}}]);

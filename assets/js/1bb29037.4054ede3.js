@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[946],{1531:s=>{s.exports=JSON.parse('{"label":"DNS","permalink":"/blog/tags/dns","allTagsPath":"/blog/tags","count":1}')}}]);
