@@ -199,7 +199,7 @@ cargo run --bin helloworld -- -l
     ...
 ```
 
-这里能看到，主要结构就是通过 workspace.members 来指定了子目录。 exclude 指定不要的目录。workspace.dependencies 指定了整个工作 区要依赖的库。
+这里能看到，主要结构就是通过 `workspace.members` 来指定了子目录。 exclude 指定不要的目录。`workspace.dependencies` 指定了整个工作 区要依赖的库。
 
 另外一种就是具体的执行程序或者库的目录，也就是 workspace 管理的具体子目录，这里比如 solana cli 的目录：
 
@@ -233,7 +233,7 @@ cargo run --bin helloworld -- -l
     targets = ["x86_64-unknown-linux-gnu"]
 ```
 
-这里 package 下面的键指定了库的属性，比如名字，描述。而 dependencies 指定了依赖， 其中 { workspace = true } 表示其继承 workspace 父目录中的 相关位置版本的信息。
+这里 package 下面的键指定了库的属性，比如名字，描述。而 dependencies 指定了依赖， 其中 `{ workspace = true }` 表示其继承 workspace 父目录中的 相关位置版本的信息。
 
 最后这通过[[bin]]定义了这里有个可执行程序叫: "solana"
 
