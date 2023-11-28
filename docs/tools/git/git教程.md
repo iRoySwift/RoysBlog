@@ -4,13 +4,13 @@ id: git-tutorial
 title: Git教程
 ---
 
-## 1. 查看 git 配置
+## 查看 git 配置
 
 ```zsh
 git config --list --查看配置
 ```
 
-## 2. 切换本地仓库源
+## 切换本地仓库源
 
 ```zsh
 git remote －v
@@ -20,14 +20,23 @@ git remote add origin [url]
 git branch --set-upstream-to=origin/<branch> <branch>
 ```
 
-## 3. 藏存本地代码 stash
+## 查询分支列表
+
+```zsh
+git branch
+
+* Ft_Dev_PAAS_V11.1
+  master
+```
+
+## 藏存本地代码 stash
 
 ```zsh
 git stash
 git stash drop stash@{1}
 ```
 
-## 4. 切换分支
+## 切换分支
 
 1. 切换新分支并追踪远程分支
 
@@ -35,14 +44,14 @@ git stash drop stash@{1}
 $ git checkout -b <branch> --track <remote>/<branch>
 ```
 
-## 5. 删除分支
+## 删除分支
 
 ```zsh
 git branch --delete --force <branch>
 
 ```
 
-## 6. 合并本地仓库与远程仓库
+## 合并本地仓库与远程仓库
 
 ```zsh
 git remote add <name> <URL>
@@ -52,7 +61,7 @@ git merge --allow-unrelated-history [--into-name <branch>]
 git push
 ```
 
-## 7. 创建新分支 & PUSH
+## 创建新分支 & PUSH
 
 -   以当前分支为基础，创建分支,并且将新分支 push 到 github
 
