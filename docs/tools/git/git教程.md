@@ -29,39 +29,18 @@ git branch
   master
 ```
 
-## 藏存本地代码 stash
-
-```zsh
-git stash
-git stash drop stash@{1}
-```
-
-## 切换分支
-
-1. 切换新分支并追踪远程分支
-
-```zsh
-$ git checkout -b <branch> --track <remote>/<branch>
-```
-
-## 删除分支
-
-```zsh
-git branch --delete --force <branch>
-
-```
-
-## 合并本地仓库与远程仓库
-
-```zsh
-git remote add <name> <URL>
-git pull <name>
-git checkout <name>/<new-branch>
-git merge --allow-unrelated-history [--into-name <branch>]
-git push
-```
-
 ## 创建新分支 & PUSH
+
+-   创建分支并切换分支
+
+```zsh
+git branch  <branch>
+git checkout <branch>
+```
+
+```zsh
+git checkout -b <branch>
+```
 
 -   以当前分支为基础，创建分支,并且将新分支 push 到 github
 
@@ -78,4 +57,36 @@ git push
 ```zsh
     git checkout -b <new-branch> --no-track <commit>
     git push --set-upstream origin <new_branch>
+```
+
+## 切换分支
+
+1. 切换新分支并追踪远程分支
+
+```zsh
+$ git checkout -b <branch> --track <remote>/<branch>
+```
+
+## 删除分支
+
+```zsh
+git branch -d --force <branch>
+
+```
+
+## 合并本地仓库与远程仓库
+
+```zsh
+git remote add <name> <URL>
+git pull <name>
+git checkout <name>/<new-branch>
+git merge --allow-unrelated-history [--into-name <branch>]
+git push
+```
+
+## 藏存本地代码 stash
+
+```zsh
+git stash
+git stash drop stash@{1}
 ```
