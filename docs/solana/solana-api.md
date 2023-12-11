@@ -36,6 +36,8 @@ import ThemedImage from '@theme/ThemedImage';
 
 ## solana-program 命令
 
+[solana-program](https://docs.solana.com/cli/deploy-a-program#closing-program-and-buffer-accounts-and-reclaiming-their-lamports)
+
 ## solana program 部署失败
 
 ### Error: Deploying program failed: Error processing Instruction 0: account data too small for instruction
