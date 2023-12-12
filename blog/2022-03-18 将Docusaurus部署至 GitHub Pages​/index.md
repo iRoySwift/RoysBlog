@@ -90,46 +90,65 @@ These files assume you are using yarn. If you use npm, change `cache: yarn`, `ya
 :::
 
 ```yml title=".github/workflows/deploy.yml"
+# This is a basic workflow to help you get started with Actions
+
 name: Deploy to GitHub Pages
 
+# Controls when the workflow will run
 on:
-  push:
-    branches:
-      - master
-    # Review gh actions docs if you want to further define triggers, paths, etc
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+    # Triggers the workflow on push or pull request events but only for the master branch
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  deploy:
-    name: Deploy to GitHub Pages
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: yarn
+    # This workflow contains a single job called "build"
+    build:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18]
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Build website
-        run: yarn build
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - uses: actions/checkout@v3
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: pnpm
 
-      # Popular action to deploy to GitHub Pages:
-      # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Build output to publish to the `gh-pages` branch:
-          publish_dir: ./build
-          # The following lines assign commit authorship to the official
-          # GH-Actions bot for deploys to `gh-pages` branch:
-          # https://github.com/actions/checkout/issues/13#issuecomment-724415212
-          # The GH actions bot is used by default if you didn't specify the two fields.
-          # You can swap them out with your own user credentials.
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Build website
+              run: pnpm build
+
+            # Popular action to deploy to GitHub Pages:
+            # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  # Build output to publish to the `gh-pages` branch:
+                  publish_dir: ./build
+                  # The following lines assign commit authorship to the official
+                  # GH-Actions bot for deploys to `gh-pages` branch:
+                  # https://github.com/actions/checkout/issues/13#issuecomment-724415212
+                  # The GH actions bot is used by default if you didn't specify the two fields.
+                  # You can swap them out with your own user credentials.
+                  user_name: github-actions[bot]
+                  user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
 ```
 
 ```yml title=".github/workflows/test-deploy.yml"
@@ -146,17 +165,24 @@ jobs:
   test-deploy:
     name: Test deployment
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-          cache: yarn
+          version: 8
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: pnpm
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Test build website
-        run: yarn build
+        run: pnpm build
 ```
 
 </details>
