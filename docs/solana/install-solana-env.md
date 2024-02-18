@@ -125,6 +125,12 @@ solana --version
 solana-install update
 ```
 
+-   安装指定版本 Solana
+
+```bash
+solana-install init 1.18.2
+```
+
 3. Setup a localhost blockchain cluster
 
 ```bash
