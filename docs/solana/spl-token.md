@@ -8,18 +8,16 @@ description: 参考指南
 import BrowserWindow from '@site/src/components/BrowserWindow';
 ```
 
-
 ## 背景
 
-[SPL-Token](https://spl.solana.com/token): Solana区块链上的令牌程序。
+[SPL-Token](https://spl.solana.com/token): Solana 区块链上的令牌程序。
 
 该程序定义了可替代和不可替代令牌的通用实现。
 
- Solana的编程模型和本文档中使用的Solana术语的定义可在以下网址获得：
+Solana 的编程模型和本文档中使用的 Solana 术语的定义可在以下网址获得：
 
-- https://docs.solana.com/apps
-- https://docs.solana.com/terminology
-
+-   https://docs.solana.com/apps
+-   https://docs.solana.com/terminology
 
 <!--
 注释掉的内容
@@ -38,7 +36,7 @@ import ThemedImage from '@theme/ThemedImage';
 
 ## spl-token 命令
 
-- 蓝色字体可以点击
+-   蓝色字体可以点击
 
 ```mdx-code-block
 import SPLImg from '/img/solana/solana-spl-token.drawio.svg';

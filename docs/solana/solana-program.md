@@ -1,6 +1,6 @@
 ---
-id: solana-api
-title: Solana API
+id: solana-program
+title: Solana Program
 description: 参考指南
 ---
 
@@ -80,6 +80,50 @@ solana program close recover.json
 从所有正在进行或失败的部署中恢复 SOL
 
 -   或者，您可以通过运行以下命令从所有正在进行的部署中恢复 SOL：
+
+-   要关闭与当前权限相关的所有缓冲帐户：
+
+```zsh
+solana program close --buffers
+```
+
+## 查询账户下部署的程序与缓冲区运行的程序
+
+-   查询默认账户下所有程序
+
+```bash
+solana program show --programs
+solana program show --buffers
+```
+
+-   显示所有缓冲帐户，无论权限如何
+
+```bash
+solana program show --buffers --all
+```
+
+-   查询指定账户下所有程序
+
+```bash
+solana program show --programs --buffer-authority <AUTHORITY_ADDRESS>
+solana program show --buffers --buffer-authority <AUTHORITY_ADDRESS>
+```
+
+## 关闭账户下部署的程序与缓冲区运行的程序
+
+```bash
+solana program close <BADDRESS>
+solana program close <ADDRESS> --buffer-authority <KEYPAIR_FILEPATH>
+```
+
+-   要关闭单个帐户并指定与默认不同的收件人：
+
+```bash
+solana program close <ADDRESS> --recipient <RECIPIENT_ADDRESS>
+
+```
+
+-   要关闭与当前权限相关的所有缓冲帐户：
 
 ```zsh
 solana program close --buffers

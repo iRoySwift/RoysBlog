@@ -129,6 +129,7 @@ solana-install update
 
 ```bash
 solana-install init 1.18.2
+rm -rf ~/.cache/solana
 ```
 
 3. Setup a localhost blockchain cluster

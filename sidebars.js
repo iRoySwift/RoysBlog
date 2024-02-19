@@ -42,23 +42,13 @@ const sidebars = {
                 },
                 {
                     type: "category",
-                    label: "Solana Api",
+                    label: "Api",
                     link: {
                         type: "generated-index",
                         description: "Solana Developer Api",
                         keywords: ["Solana"],
                     },
-                    items: ["solana/solana-api"],
-                },
-                {
-                    type: "category",
-                    label: "SPL Token",
-                    link: {
-                        type: "generated-index",
-                        description: "SPL Token Program",
-                        keywords: ["Solana"],
-                    },
-                    items: ["solana/token-program"],
+                    items: ["solana/solana-program", "solana/token-program"],
                 },
                 {
                     type: "category",
