@@ -193,7 +193,7 @@ npm install <dependency> -w <package1> -w <package2>
 
         --independent/-i – 使用独立的 版本控制模式
 
--   `lerna bootstrap`
+-   ~~`lerna bootstrap`~~
 
     -   在当前 Lerna 仓库中执行引导流程（bootstrap）。安装所有 依赖项并链接任何交叉依赖。
     -   此命令至关重要，因为它让你可以 在 require() 中直接通过软件包的名称进行加载，就好像此软件包已经存在于 你的 node_modules 目录下一样。
@@ -322,7 +322,7 @@ $ lerna run --scope my-component test # 运行 my-component 模块下的 test
 
 <details title="lerna add">
   <summary>
-  lerna add
+    <s>lerna add</s>
   </summary>
 
 ```
