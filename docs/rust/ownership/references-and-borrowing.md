@@ -49,9 +49,9 @@ fn main() {
 -   理解：
     1. 引用的作用域是从它定义到它最后一次使用时结束！
     2. 引用的作用域不可能长于所有权作用域（悬垂引用）
-    3. 一个资源的 immutable refrences，可以同时存在多个;(multiple immutable references)
-    4. 一个资源的 immutable refrences 于 mutable refrences 作用域不可以重叠，不可以同时存在(only one immutable reference or mutable reference in scope)
-    5. 一个资源的 mutable refrences 与另一个 mutable refrences 的作用域不可以重叠(only one mutable reference)
+    3. 一个资源的 immutable refrences，可以同时存在多个;(**multiple immutable references**)
+    4. 一个资源的 immutable refrences 于 mutable refrences 作用域不可以重叠，不可以同时存在(**only one immutable reference or mutable reference in scope**)
+    5. 一个资源的 mutable refrences 与另一个 mutable refrences 的作用域不可以重叠(**only one mutable reference**)
 
 ## mutable refrences 排它性
 
