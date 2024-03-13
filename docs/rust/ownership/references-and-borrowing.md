@@ -28,9 +28,9 @@ fn main() {
 
     1. 对于存储在栈中的数据(整数、布尔、浮点数、char 等)，将变量 a 赋值给另一个变量 b 时会复制一份数据，新变量 b 也会拥有对新复制数据 10u32 的所有权，而且不会影响原来 a 的所有权。所以打印 a、b 变量都可以正常打印。等 main 函数结束，a、b 都离开了作用域，对应的栈数据内存使用也会被回收；
 
-    2. 对于存储在堆中的数据，将变量 s1 赋值给另一个变量 s2 时， Rust 同时会使第一个变量 s1 无效了，所以 s1 不可打印。直到花括号结束 s2 及 s2 所拥有的字符串内存也会被回收，栈结束时，s1 所对应的局部变量内存也会被回收。
+    2. (only one ownership in a scope)对于存储在堆中的数据，将变量 s1 赋值给另一个变量 s2 时， Rust 同时会使第一个变量 s1 无效了，所以 s1 不可打印。直到花括号结束 s2 及 s2 所拥有的字符串内存也会被回收，栈结束时，s1 所对应的局部变量内存也会被回收。
 
-## 不可变引用与可变引用
+## immutable refrences 与 mutable refrences
 
 ```rust
 fn main() {
@@ -38,9 +38,9 @@ fn main() {
     let _c = &a; // &a 多个引用
     let _e = &a;
     let b = &mut a;
-    // let f = &a; //&mut a与&a 一个资源的不可变引用于可变引用作用域不可以重叠，不可以同时存在
+    // let f = &a; //&mut a与&a 一个资源的immutable refrences于mutable refrences作用域不可以重叠，不可以同时存在
     *b = 20;
-    // let d = &mut a; // 一个资源的可变引用与另一个可变引用的作用域不可以重叠
+    // let d = &mut a; // 一个资源的mutable refrences与另一个mutable refrences的作用域不可以重叠
     println!("{b}");
 }
 
@@ -49,11 +49,11 @@ fn main() {
 -   理解：
     1. 引用的作用域是从它定义到它最后一次使用时结束！
     2. 引用的作用域不可能长于所有权作用域（悬垂引用）
-    3. 一个资源的不可变引用，可以同时存在多个;
-    4. 一个资源的不可变引用于可变引用作用域不可以重叠，不可以同时存在
-    5. 一个资源的可变引用与另一个可变引用的作用域不可以重叠
+    3. 一个资源的 immutable refrences，可以同时存在多个;(multiple immutable references)
+    4. 一个资源的 immutable refrences 于 mutable refrences 作用域不可以重叠，不可以同时存在(only one immutable reference or mutable reference in scope)
+    5. 一个资源的 mutable refrences 与另一个 mutable refrences 的作用域不可以重叠(only one mutable reference)
 
-## 可变引用排它性
+## mutable refrences 排它性
 
 ```rust
 fn main() {
@@ -65,5 +65,5 @@ fn main() {
 ```
 
 -   理解
-    1. 不可变引用可以被复制
-    2. 可变引用不可以被复制，只能被 move
+    1. immutable refrences 可以被复制
+    2. mutable refrences 不可以被复制，只能被 move
