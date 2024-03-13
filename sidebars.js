@@ -204,6 +204,22 @@ const sidebars = {
         },
         {
             type: "category",
+            label: "Rust",
+            items: [
+                {
+                    type: "category",
+                    label: "OwnerShip",
+                    link: {
+                        type: "generated-index",
+                        description: "A Starter Kit for New Solana Developer",
+                        keywords: ["OwnerShip"],
+                    },
+                    items: ["rust/ownership/references-and-borrowing"],
+                },
+            ],
+        },
+        {
+            type: "category",
             label: "前端",
             items: [
                 "web/react/custom-templates",
