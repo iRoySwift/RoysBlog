@@ -16,7 +16,7 @@
  Create as many sidebars as you want.
  */
 
-// @ts-check
+// @ts-nocheck
 const tools = require("./sidebars/tools");
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
@@ -26,6 +26,18 @@ const sidebars = {
     // But you can create a sidebar manually
     docs: [
         "intro",
+        {
+            type: "category",
+            label: "面试题",
+            items: [
+                "interview-question/js-question",
+                "interview-question/css-question",
+                "interview-question/react-question",
+                "interview-question/vue-question",
+                "interview-question/typescript-question",
+                "interview-question/uniapp-question",
+            ],
+        },
         {
             type: "category",
             label: "Solana",

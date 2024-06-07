@@ -15,10 +15,10 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@docusaurus/core": "3.0.0",
-        "@docusaurus/plugin-google-analytics": "3.0.0",
-        "@docusaurus/preset-classic": "3.0.0",
-        "@docusaurus/remark-plugin-npm2yarn": "3.0.0",
+        "@docusaurus/core": "3.4.0",
+        "@docusaurus/plugin-google-analytics": "3.4.0",
+        "@docusaurus/preset-classic": "3.4.0",
+        "@docusaurus/remark-plugin-npm2yarn": "3.4.0",
         "@mdx-js/react": "^3.0.0",
         "clsx": "^2.0.0",
         "docusaurus-plugin-sass": "^0.2.5",
@@ -28,7 +28,7 @@
         "sass": "^1.69.5"
     },
     "devDependencies": {
-        "@docusaurus/module-type-aliases": "3.0.0",
+        "@docusaurus/module-type-aliases": "3.4.0",
         "@docusaurus/types": "3.0.0",
         "typescript": "^5.3.2"
     },
@@ -46,5 +46,6 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    }
+    },
+    "packageManager": "pnpm@8.15.5+sha1.a58c038faac410c947dbdb93eb30994037d0fce2"
 }
