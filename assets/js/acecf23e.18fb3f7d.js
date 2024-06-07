@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkroys_blog=self.webpackChunkroys_blog||[]).push([[7393],{1838:s=>{s.exports=JSON.parse('{"blogBasePath":"/blog","blogTitle":"Roy\'s \u535a\u5ba2\uff01"}')}}]);
