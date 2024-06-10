@@ -1126,7 +1126,7 @@ new 操作符的执行过程：
 
 -   手写观察者模式（行为模式）
 
-    ````js
+    ```js
     // 定义 observe
     const queuedObservers = new Set();
     const observe = fn => queuedObservers.add(fn);
@@ -1142,7 +1142,6 @@ new 操作符的执行过程：
     });
 
     ```
-    ````
 
 代码测试
 
@@ -1221,18 +1220,6 @@ new 操作符的执行过程：
 
 -   从表面上看：
 
-```mdx-code-block
-<BrowserWindow minHeight={240} >
-    <ThemedImage
-    alt="Docusaurus themed image"
-    sources={{
-        light: useBaseUrl('/img/interview/clone-deep.png'),
-        dark: useBaseUrl('/img/interview/clone-deep.png'),
-    }}
-    />
-</BrowserWindow>
-```
-
     -   观察者模式里，只有两个角色 —— 观察者 + 被观察者
     -   而发布订阅模式里，却不仅仅只有发布者和订阅者两个角色，还有一个经常被我们忽略的 —— {经纪人|Broker}
 
@@ -1241,5 +1228,3 @@ new 操作符的执行过程：
 -   观察者和被观察者，是松耦合的关系 -发布者和订阅者，则完全不存在耦合
 
 -   从使用层面上讲：
-
--   观察者模式，多用于单个应用内部 -发布订阅模式，则更多的是一种{跨应用的模式|cross-application pattern} ，比如我们常用的消息中间件
