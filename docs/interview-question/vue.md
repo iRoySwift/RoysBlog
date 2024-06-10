@@ -36,3 +36,14 @@ vue3 使用了 fragment 编译机制，每个根节点都会被编译成单独�
 ### vuex 持久化方案
 
 localStorage
+
+### vue 中数组支持响应的方法
+
+    在Vue现有阶段中，对响应式处理利用的是Object.defineProperty对数据进行拦截，而这个方法并不能监听到数组内部变化，数组长度变化，数组的截取变化等，所以我们需要对这些操作进行hack，让vue能监听到其中的变化。
+
+    push、pop、shift、unshift、splice、sort、reverse
+
+
+
+    - 改变原数组：push、pop、shift、unshift、splice、sort、reverse
+    - 不改变原数组：slice、contact、join、map、foreach、filter
