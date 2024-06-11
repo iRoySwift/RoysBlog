@@ -216,320 +216,172 @@ sources={{
     console.log(p.__proto__ === p.constructor.prototype); // true
     ```
 
-### JavaScript 实现继承的六种方式
+### JavaScript 实现继承的五种方式
 
 1. 原型链继承
 
-    将父类的实例作为子类的原型
+原型链继承通过修改子类的原型为父类的实例，从而实现子类可以访问到父类构造函数以及原型上的属性或者方法。
 
-    ```javascript
-    function Person(name) {
-        this.name = name;
-        this.say = function () {
-            console.log("1 + 1 = 2");
-        };
+-   让我们来实现一下：
+
+    ```js
+    function Parent() {
+        this.name = "fedaily";
     }
 
-    Person.prototype.listen = function () {
-        console.log("エウテルペ");
+    Parent.prototype.getName = function () {
+        return this.name;
     };
 
-    function Student() {}
+    function Child() {}
+    // 这里也可以直接写出Child.prototype = Parent.prototype
+    // 但是这样就不能访问到父类的构造函数的属性了，即this.name
+    Child.prototype = new Parent();
 
-    Student.prototype = new Person(); //关键
-
-    const stu = new Student();
-
-    stu.grade = 3;
-
-    console.log(stu.grade); // 3
-
-    stu.say(); // 1 + 1 = 2
-    stu.listen(); // エウテルペ
+    var child = new Child();
+    child.getName(); // fedaily
     ```
 
--   优点：
+    -   优点
 
-    -   简单易实现
-    -   父类新增原型方法/原型属性，子类都能访问
-    -   实例是子类的实例也是父类的实例
+        实现逻辑简单
+
+    -   缺点
+
+        父类构造函数中的引用类型（比如对象/数组），会被所有子类实例共享。其中一个子类实例进行修改，会导致所有其他子类实例的这个值都会改变
+
+2. 构造函数继承
+
+构造函数继承其实就是通过修改父类构造函数 this 实现的继承。我们在子类构造函数中执行父类构造函数，同时修改父类构造函数的 this 为子类的 this。
+
+-   我们直接看如何实现：
 
     ```js
-    stu instanceof Student; // true
-    stu instanceof Person; // true
+    function Parent() {
+        this.name = ["fedaily"];
+    }
+
+    function Child() {
+        Parent.call(this);
+    }
+
+    var child = new Child();
+    child.name.push("fe");
+
+    var child2 = new Child(); // child2.name === ['fedaily']
     ```
 
--   缺点：
+    -   优点
 
-    -   为子类新增属性和方法，不能在构造函数中
-    -   无法实现多继承
-    -   创建子类实例时，不能向父类构造函数传参数
-    -   所有新实例都会共享父类实例的属性。（原型上的属性是共享的，一个实例修改了原型属性，另一个实例的原型属性也会被修改！）
+        解决了原型链继承中构造函数引用类型共享的问题，同时可以向构造函数传参（通过 call 传参）
 
--   存在的问题：
+    -   缺点
 
-    prototype 里有个属性 constructor 指向构造函数本身，但是， Student 的原型已经被父类的实例取代了，所以指向也不正确，所以需要修复构造函数指向(这里网上的教程只是对组合继承、寄生组合式继承进行了修复，不知道是不是因为这个不常用的关系)
+        所有方法都定义在构造函数中，每次都需要重新创建（对比原型链继承的方式，方法直接写在原型上，子类创建时不需要重新创建方法）
+
+3. 组合继承
+
+-   同时结合原型链继承、构造函数继承就是组合继承了。
 
     ```js
-    function Student() {}
-    console.log(Student.prototype.constructor);
+    function Parent() {
+        this.name = "fedaily";
+    }
 
-    Student.prototype = new Person(); //关键
-
-    const stu = new Student();
-
-    stu.grade = 3;
-
-    console.log(stu.grade); // 3
-
-    stu.say(); // 1 + 1 = 2
-    stu.listen(); // エウテルペ
-    console.log(Student.prototype.constructor);
-    ```
-
--   解决问题
-
-    Student.prototype.constructor = Student
-
-2. 借用构造函数继承
-   在一个类中执行另一个类的构造函数，通过 call 函数设置 this 的指向，这样就可以得到另一个类的所有属性
-
-```js
-function WebsiteMaster(site) {
-    this.site = site;
-}
-
-function Student(name, grade, site) {
-    Person.call(this, name);
-    WebsiteMaster.call(this, site);
-    this.grade = grade;
-}
-
-const stu = new Student("clz", 3, "https://clz.vercel.app");
-
-console.log(stu.name, stu.grade, stu.site); // clz, 3, https://clz.vercel.app
-
-stu.say(); // 1 + 1 = 2
-stu.listen(); // Uncaught TypeError: stu.listen is not a function
-```
-
--   优点：
-
-    -   创建子类实例时，可以向父类传递参数
-    -   可以实现多继承(call 多个对象)
-    -   不需要修复构造函数指向
-
--   缺点：
-
-    -   方法在构造函数中定义，无法复用
-    -   只能继承父类的实例属性，不能继承原型属性、方法
-    -   实例并不是父类的实例，而只是子类的实例
-
-    -   stu instanceof Student // true
-    -   stu instanceof Person // false
-    -   继承继着不再是人了(笑)
-
-3. 原型式继承
-
-为父类实例添加属性、方法，作为子类实例。
-
-道格拉斯·克罗克福德在一篇文章中介绍了一种实现继承的方法，这种方法并没有使用严格意义上的构造函数。它的想法是借助原型可以基于已有的对象创建新对象，同时还不必因此创建自定义类型。为了达到这个目的，他给出了如下函数。
-
-```js
-function object(o) {
-    function F() {}
-    F.prototype = o;
-    return new F();
-}
-function object(o) {
-    function F() {}
-    F.prototype = o;
-    return new F();
-}
-
-const person = new Person("clz");
-
-const stu = object(person);
-
-stu.grade = 3;
-stu.study = function () {
-    console.log("FrontEnd");
-};
-
-console.log(stu.name, stu.grade); // clz, 3
-
-stu.say(); // 1 + 1 = 2
-stu.listen(); // エウテルペ
-
-stu.study(); // FrontEnd
-```
-
--   优点：
-
-    -   感觉没啥优点，不太像继承
-
--   缺点：
-
-    -   不支持多继承
-    -   实例是父类的实例
-
-4. 寄生式继承
-   为父类实例添加属性、方法，作为子类实例。(原理和原型式继承一样)
-
-```js
-function object(o) {
-    function F() {}
-    F.prototype = o;
-    return new F();
-}
-
-function Student(name, grade) {
-    const person = object(new Person(name));
-
-    person.grade = grade;
-    person.study = function () {
-        console.log("FrontEnd");
+    Parent.prototype.getName = function () {
+        return this.name;
     };
 
-    return person;
-}
+    function Child() {
+        Parent.call(this);
+        this.topic = "fe";
+    }
 
-const stu = new Student("clz", 3);
+    Child.prototype = new Parent();
+    // 需要重新设置子类的constructor，Child.prototype = new Parent()相当于子类的原型对象完全被覆盖了
+    Child.prototype.constructor = Child;
+    ```
 
-console.log(stu.name, stu.grade); // clz, 3
+    -   优点
 
-stu.say(); // 1 + 1 = 2
-stu.listen(); // エウテルペ
+    同时解决了构造函数引用类型的问题，同时避免了方法会被创建多次的问题
 
-stu.study(); // FrontEnd
-```
+    -   缺点
 
--   优点：
+    父类构造函数被调用了两次。同时子类实例以及子类原型对象上都会存在 name 属性。虽然根据原型链机制，并不会访问到原型对象上的同名属性，但总归是不美。
 
-    -   有了子类的雏形，但是换汤不换药，原理和原型式继承一样
+4. 寄生组合继承
 
--   缺点：
+-   寄生组合继承其实就是在组合继承的基础上，解决了父类构造函数调用两次的问题。我们来看下如何解决的：
 
-    -   不支持多继承
-    -   实例是父类的实例，不是子类的实例(因为只是在父类的实例上添加属性、方法而已)
+    ```js
+    function Parent() {
+        this.name = "fedaily";
+    }
 
-```js
-stu instanceof Student; // false
-stu instanceof Person; // true
-```
+    Parent.prototype.getName = function () {
+        return this.name;
+    };
 
-5. 组合继承
-   原型链继承+借用构造函数继承
+    function Child() {
+        Parent.call(this);
+        this.topic = "fe";
+    }
 
-```js
-function WebsiteMaster(site) {
-    this.site = site;
-}
+    // 仔细看这个函数的实现
+    inherit(Child, Parent);
+    function inherit(child, parent) {
+        var prototype = object(parent.prototype);
+        prototype.constructor = child;
+        child.prototype = prototype;
+    }
 
-function Student(name, grade, site) {
-    Person.call(this, name); // 继承属性
-    WebsiteMaster.call(this, site);
-    this.grade = grade;
-}
+    // 这个函数的作用可以理解为复制了一份父类的原型对象
+    // 如果直接将子类的原型对象赋值为父类原型对象
+    // 那么修改子类原型对象其实就相当于修改了父类的原型对象
+    function object(o) {
+        function F() {}
+        F.prototype = o;
+        return new F();
+    }
+    ```
 
-Student.prototype = new Person(); // 继承方法
-Student.prototype.constructor = Student;
+    -   优点
 
-const stu = new Student("clz", 3, "https://clz.vercel.app");
+    这种方式就解决了组合继承中的构造函数调用两次，构造函数引用类型共享，以及原型对象上存在多余属性的问题。是推荐的最合理实现方式（排除 ES6 的 class extends 继承哈哈哈）。
 
-console.log(stu.name, stu.grade, stu.site); // clz, 3, https://clz.vercel.app
+    -   缺点
 
-stu.say(); // 1 + 1 = 2
-stu.listen(); // エウテルペ
+    没有啥特别的缺点
 
-console.log(stu.constructor);
-```
+5. ES6 继承
 
--   优点：
+    ES6 提供了 class 语法糖，同时提供了 extends 用于实现类的继承。这也是项目开发中推荐使用的方式。
 
-    -   可以继承实例属性、方法，也可以继承原型属性、方法
-    -   可传参、可复用
-    -   实例既是子类的实例，也是父类的实例
+    使用 class 继承很简单，也很直观：
 
--   缺点：
+    ```js
+    class Parent {
+        constructor() {
+            this.name = "fedaily";
+        }
 
-    -   调用了两次父类构造函数，耗内存
-    -   需要修复构造函数指向
+        getName() {
+            return this.name;
+        }
+    }
 
-6. 寄生组合式继承
-   通过 Object.create()来代替给子类原型赋值的过程，解决了两次调用父类构造函数的问题
+    class Child extends Parent {
+        constructor() {
+            // 这里很重要，如果在this.topic = 'fe'后面调用，会导致this为undefined，具体原因可以详细了解ES6的class相关内容，这里不展开说明
+            super();
+            this.topic = "fe";
+        }
+    }
 
-```js
-function WebsiteMaster(site) {
-    this.site = site;
-}
-
-function Student(name, grade, site) {
-    Person.call(this, name); // 继承属性
-    WebsiteMaster.call(this, site);
-    this.grade = grade;
-}
-
-Student.prototype = Object.create(Person.prototype); // 继承方法
-Student.prototype.constructor = Student; // 修复构造函数指向
-
-const stu = new Student("clz", 3, "https://clz.vercel.app");
-
-console.log(stu.name, stu.grade, stu.site); // clz, 3, https://clz.vercel.app
-
-stu.say(); // 1 + 1 = 2
-stu.listen(); // エウテルペ
-```
-
-有人可能会提出：为什么不可以直接把父类原型赋值给子类原型来实现呢？
-
-这是因为直接赋值的话，那就是引用关系。下面就来看看
-
-```js
-function WebsiteMaster(site) {
-    this.site = site;
-}
-function Student(name, grade, site) {
-    Person.call(this, name); // 继承属性
-    WebsiteMaster.call(this, site);
-    this.grade = grade;
-}
-
-Student.prototype = Person.prototype; // 继承方法
-Student.prototype.constructor = Student; // 修复实例
-
-const stu = new Student("clz", 3, "https://clz.vercel.app");
-
-console.log(stu.name, stu.grade, stu.site); // clz, 3, https://clz.vercel.app
-
-stu.say(); // 1 + 1 = 2
-stu.listen(); // エウテルペ
-
-Student.prototype.listen = function () {
-    console.log("EGOIST");
-};
-
-console.log(Person.prototype.listen);
-```
-
-可以看到，修改 Student 原型上的方法时， Person 的原型上的也会跟着变化。
-
-Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的 **proto**。
-所以，此时修改 Student 原型上的方法时， Person 的原型上的不会跟着变化。
-es6 之前没有 Object.create()方法，可以自己实现(实际就是原型式继承的关键函数)
-
--   关键：
-    -   接受一个对象 obj
-    -   返回一个新对象 newObj
-    -   让 newObj.**proto** === obj
-
-```js
-function object(obj) {
-    function F() {} // 新的构造函数
-    F.prototype = obj; // 继承传入的参数obj
-    return new F(); // 返回新的函数对象
-}
-```
+    const child = new Child();
+    child.getName(); // fedaily
+    ```
 
 ### 函数声明会覆盖变量声明，但不会覆盖变量赋值
 
