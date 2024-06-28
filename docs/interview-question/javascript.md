@@ -995,78 +995,78 @@ new 操作符的执行过程：
 
     ```
 
-代码测试
+    代码测试
 
-    ```js
-    obj = observable({
-    name:'789'
-    })
-    ​
-    observe(function test(){
-    console.log('触发了')
-    })
-    ​
-    obj.name ="前端柒八九"
-    // 触发了
-    // 前端柒八九
-    ```
+        ```js
+        obj = observable({
+        name:'789'
+        })
+        ​
+        observe(function test(){
+        console.log('触发了')
+        })
+        ​
+        obj.name ="前端柒八九"
+        // 触发了
+        // 前端柒八九
+        ```
 
 -   手写发布订阅 （行为模式）
 
-            ```js
-            class Observer {
-             caches = {}; // 事件中心
-             
-             // eventName事件名-独一无二, fn订阅后执行的自定义行为
-             on (eventName, fn){
-               this.caches[eventName] = this.caches[eventName] || [];
-               this.caches[eventName].push(fn);
-            }
-             
-             // 发布 => 将订阅的事件进行统一执行
-             emit (eventName, data) {
-               if (this.caches[eventName]) {
-                 this.caches[eventName]
-                 .forEach(fn => fn(data));
-               }
-            }
-             // 取消订阅 => 若fn不传, 直接取消该事件所有订阅信息
-             off (eventName, fn) {
-               if (this.caches[eventName]) {
-                 const newCaches = fn
-                   ? this.caches[eventName].filter(e => e !== fn)
-                   : [];
-                 this.caches[eventName] = newCaches;
-               }
-            }
-            ​
-            }
+    ```js
+    class Observer {
+     caches = {}; // 事件中心
+     
+     // eventName事件名-独一无二, fn订阅后执行的自定义行为
+     on (eventName, fn){
+       this.caches[eventName] = this.caches[eventName] || [];
+       this.caches[eventName].push(fn);
+    }
+     
+     // 发布 => 将订阅的事件进行统一执行
+     emit (eventName, data) {
+       if (this.caches[eventName]) {
+         this.caches[eventName]
+         .forEach(fn => fn(data));
+       }
+    }
+     // 取消订阅 => 若fn不传, 直接取消该事件所有订阅信息
+     off (eventName, fn) {
+       if (this.caches[eventName]) {
+         const newCaches = fn
+           ? this.caches[eventName].filter(e => e !== fn)
+           : [];
+         this.caches[eventName] = newCaches;
+       }
+    }
+    ​
+    }
 
-            ```
+    ```
 
-        代码测试
+    代码测试
 
-            ```js
-            ob = new Observer();
+        ```js
+        ob = new Observer();
 
-            l1 = (data) => console.log(`l1_${data}`)
-            l2 = (data) => console.log(`l2_${data}`)
-            ​
-            ob.on('event1',l1)
-            ob.on('event1',l2)
-            ​
-            //发布订阅
-            ob.emit('event1',789)
-            // l1_789
-            // l2_789
-            ​
-            // 取消，订阅 l1
-            ob.off('event1',l1)
-            ​
-            ob.emit('event1',567)
-            //l2_567
+        l1 = (data) => console.log(`l1_${data}`)
+        l2 = (data) => console.log(`l2_${data}`)
+        ​
+        ob.on('event1',l1)
+        ob.on('event1',l2)
+        ​
+        //发布订阅
+        ob.emit('event1',789)
+        // l1_789
+        // l2_789
+        ​
+        // 取消，订阅 l1
+        ob.off('event1',l1)
+        ​
+        ob.emit('event1',567)
+        //l2_567
 
-            ```
+        ```
 
 -   观察者模式 VS 发布订阅模式
 
