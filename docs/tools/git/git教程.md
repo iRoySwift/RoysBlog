@@ -4,6 +4,42 @@ id: git-tutorial
 title: Git教程
 ---
 
+### 查询 DNS
+
+https://www.ipaddress.com/
+
+### 设置代理
+
+```zsh
+
+#Github host
+140.82.113.3 github.com
+151.101.1.194  github.global.ssl.fastly.net
+140.82.112.10 codeload.Github.com
+
+
+mac：sudo vim /etc/hosts
+window： C:\Windows\System32\drivers\etc
+
+# 设置ss
+git config --global http.proxy 'socks5://127.0.0.1:1080'
+
+git config --global https.proxy 'socks5://127.0.0.1:1080'
+
+# 设置代理
+git config --global https.proxy http://127.0.0.1:1080
+
+git config --global https.proxy https://127.0.0.1:1080
+
+# 取消代理
+git config --global --unset http.proxy
+
+git config --global --unset https.proxy
+
+
+npm config delete proxy
+```
+
 ## 查看 git 配置
 
 ```zsh
