@@ -51,8 +51,79 @@ description: hos Question
 
     冷启动：目标UIAbility冷启动时，在目标UIAbility的onCreate()生命周期回调中，接收调用方传过来的参数。然后在目标UIAbility的onWindowStageCreate()生命周期回调中，解析EntryAbility传递过来的want参数，获取到需要加载的页面信息url，传入windowStage.loadContent()方法。
 
-    热启动：在应用开发中，会遇到目标UIAbility实例之前已经启动过的场景，这时再次启动目标UIAbility时，不会重新走初始化逻辑，只会直接触发onNewWant()生命周期方法。为了实现跳转到指定页面，需要在onNewWant()中解析参数进行处理。
+    热启动：在应用开发中，会遇到目标UIAbility实例之前已经启动过的场景，这时再次启动目标UIAbility时，不会重新走初始化逻辑，AbilityStage只会直接触发onNewWant()生命周期方法。为了实现跳转到指定页面，需要在onNewWant()中解析参数进行处理。
 
 -   当被调用方 UIAbility 组件启动模式设置为 multiton 启动模式时，每次启动都会创建一个新的实例，那么 onNewWant()回调就不会被用到。
 
-### 打开一个新的 ability，如何传参，如何接受参数，区分冷启动与热启动？
+### 启动 UIAbility 有显式 Want 启动和隐式 Want 启动两种方式。
+
+-   配置 skills 标签的 entities 字段和 actions 字段
+
+    ```json
+    {
+        "module": {
+            "abilities": [
+            {
+                ...
+                "skills": [
+                {
+                    "entities": [
+                    ...
+                    "entity.system.default"
+                    ],
+                    "actions": [
+                    ...
+                    "ohos.want.action.viewData"
+                    ]
+                }
+                ]
+            }
+            ]
+        }
+    }
+    ```
+
+-   在调用方 want 参数中的 entities 和 action 需要被包含在待匹配 UIAbility 的 skills 配置的 entities 和 actions 中。系统匹配到符合 entities 和 actions 参数条件的 UIAbility 后，会弹出选择框展示匹配到的 UIAbility 实例列表供用户选择使用。示例中的 context 的获取方式请参见获取 UIAbility 的上下文信息。
+
+    ```js
+    let context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext; // UIAbilityContext
+    let want: Want = {
+        deviceId: '', // deviceId为空表示本设备
+        // uncomment line below if wish to implicitly query only in the specific bundle.
+        // bundleName: 'com.samples.stagemodelabilityinteraction',
+        action: 'ohos.want.action.viewData',
+        // entities can be omitted.
+        entities: ['entity.system.default']
+    };
+    // context为调用方UIAbility的UIAbilityContext
+    context.startAbility(want).then(() => {
+        hilog.info(DOMAIN_NUMBER, TAG, 'Succeeded in starting FuncAbility.');
+    }).catch((err: BusinessError) => {
+        hilog.error(DOMAIN_NUMBER, TAG, `Failed to start FuncAbility. Code is ${err.code}, message is ${err.message}`);
+    });
+    ```
+
+-   在文档应用使用完成之后，如需要停止当前 UIAbility 实例，通过调用 terminateSelf()方法实现。
+
+    ```js
+    let context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext; // UIAbilityContext
+    // context为需要停止的UIAbility实例的AbilityContext
+    context.terminateSelf((err) => {
+        if (err.code) {
+            hilog.error(DOMAIN_NUMBER, TAG, `Failed to terminate self. Code is ${err.code}, message is ${err.message}`);
+            return;
+        }
+    });
+    ```
+
+### 栅格布局 (GridRow/GridCol)与网格布局 （Grid/GridItem） 区别
+
+-   栅格
+
+    -   栅格系统断点：breakpoints
+    -   GridRow 中通过 columns 设置栅格布局的总列数 12。
+
+-   网格布局
+    -   栅格系统断点：breakpoints
+
+### TaskPool 和 Worker 的对比 (TaskPool 和 Worker)

@@ -36,6 +36,7 @@ const sidebars = {
                 "interview-question/vue-question",
                 "interview-question/typescript-question",
                 "interview-question/uniapp-question",
+                "interview-question/hos-question",
             ],
         },
         {
