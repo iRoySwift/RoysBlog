@@ -7,20 +7,27 @@ description: hos Question
 ### 不同类型的 Module 编译后会生成对应的 HAP、HAR、HSP
 
     entry module => hap
+
     feature module => hap
+
     shared module =>hsp
+
     static module(har) =>har
 
 ### 生命周期
 
     页面生命周期： aboutToAppear、onPageShow、onPageHide、aboutToDisappear、onBackPress
+
     组件生命周期：aboutToAppear、aboutToDisappear
+
     UIAbility 生命周期：onCreate、onWindowStageCreate、onForeground、onBackground、onWindowStageDestroy、onDestroy
+
     AbilityStage 回调：onCreate、onNewWant、onAcceptWant、onMemoryLevel、onConfigurationUpdate
 
 ### 首选项（Preferences）和长连接（PersistentStorage）的区别
 
     PersistentStorage将选定的AppStorage属性保留在设备磁盘上；PersistentStorage的持久化变量最好是小于2kb的数据，不要大量的数据持久化，因为PersistentStorage写入磁盘的操作是同步的，大量的数据本地化读写会同步在UI线程中执行，影响UI渲染性能。如果开发者需要存储大量的数据，建议使用数据库api。
+
     preferences可看做是配置项，为应用提供Key-Value键值型的数据处理能力，支持应用持久化轻量级数据，并对其修改和查询。
 
     两个区别就是storage建议是页面缓存数据；preferences是应用配置
@@ -28,9 +35,13 @@ description: hos Question
 ### 管理组件拥有的状态
 
     @State装饰器：组件内状态
+
     @Prop装饰器：父子单向同步
+
     @Link装饰器：父子双向同步
+
     @Provide装饰器和@Consume装饰器：与后代组件双向同步
+
     @Observed装饰器和@ObjectLink装饰器：嵌套类对象属性变化
 
 ### 管理应用拥有的状态
@@ -54,6 +65,7 @@ description: hos Question
     热启动：在应用开发中，会遇到目标UIAbility实例之前已经启动过的场景，这时再次启动目标UIAbility时，不会重新走初始化逻辑，AbilityStage只会直接触发onNewWant()生命周期方法。为了实现跳转到指定页面，需要在onNewWant()中解析参数进行处理。
 
 -   当被调用方 UIAbility 组件启动模式设置为 multiton 启动模式时，每次启动都会创建一个新的实例，那么 onNewWant()回调就不会被用到。
+-   在 HarmonyOS 应用开发中，UIAbilityContext 的 this.context.terminateSelf()方法被用来结束当前的 UIAbility 实例。
 
 ### 启动 UIAbility 有显式 Want 启动和隐式 Want 启动两种方式。
 
@@ -127,3 +139,28 @@ description: hos Question
     -   栅格系统断点：breakpoints
 
 ### TaskPool 和 Worker 的对比 (TaskPool 和 Worker)
+
+    TaskPool和Worker都基于Actor并发模型实现
+
+-   TaskPool
+
+    -   序列化传输的数据量大小限制为 16MB
+    -   实现任务的函数需要使用装饰器@Concurrent 标注，且仅支持在.ets 文件中使用
+    -   创建 TaskGroup 并通过 addTask()添加对应的任务，通过 execute()执行任务组，并指定为高优先级
+    -   支持取消任务 taskpool.cancel(taskGroup2);
+
+-   Worker
+    -   DevEco Studio 提供了 Worker 创建的模板，新建一个 Worker 线程，例如命名为“MyWorker”
+    -   销毁 Worker 线程
+
+| 实现             | Taskpoll                                           | Worker                             |
+| ---------------- | -------------------------------------------------- | ---------------------------------- |
+| 生命周期         | TaskPool 自行管理生命周期，无需关心任务负载高低    | 开发者自行管理                     |
+| 任务池个数上限   | 自动管理，无需配置                                 | 最多支持同时开启 64 个 Worker 线程 |
+| 任务执行时长上限 | 3 分钟（不包含 Promise），长时任务无执行时长上限。 | 无限制                             |
+| 设置任务的优先级 | 支持配置任务优先级。                               | 不支持。                           |
+| 执行任务的取消   | 支持取消已经发起的任务                             | 不支持。                           |
+
+### TaskPool 里面是否可以使用 EventHub
+
+    目前EventHub只能在主线程使用，不支持在TaskPool中使用。
