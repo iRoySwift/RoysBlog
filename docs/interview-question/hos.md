@@ -16,11 +16,24 @@ description: hos Question
 
 ### 生命周期
 
-    页面生命周期： aboutToAppear、onPageShow、onPageHide、aboutToDisappear、onBackPress
+-   页面的生命周期(3+2)
+    -   onPageShow:页面显示触发(页面特有)
+    -   onPageHide：页面隐藏触发(页面特有)
+    -   onBackPress：当用户点击返回按钮时触发(页面特有)
+    -   aboutToAppear：组件即将出现时触发
+    -   aboutToDisappear：组件即将析构销毁时触发
+-   组件的生命周期(2)
+    -   aboutToAppear：组件即将出现时触发
+    -   aboutToDisappear：组件即将析构销毁时触发
+-   UIAbility 组件生命周期函数
+    -   onCreate: UIAbility 实例创建完成时触发
+    -   onForeground: 在 UIAbility 的 UI 可见之前
+    -   onBackground: 在 UIAbility 的 UI 完全不可见之后
+    -   onDestroy: 在 UIAbility 实例销毁时触发
+-   WindowStage 窗口生命周期函数
 
-    组件生命周期：aboutToAppear、aboutToDisappear
-
-    UIAbility 生命周期：onCreate、onWindowStageCreate、onForeground、onBackground、onWindowStageDestroy、onDestroy
+    -   onWindowStageCreate 窗口才能构建
+    -   onWindowStageDestroy 窗口销毁
 
     AbilityStage 回调：onCreate、onNewWant、onAcceptWant、onMemoryLevel、onConfigurationUpdate
 
@@ -50,9 +63,17 @@ description: hos Question
 
     -   @Entry(storage) 未被@Entry 装饰的组件不可被独立分配 LocalStorage 实例
 
--   AppStorage：应用全局的 UI 状态存储
--   PersistentStorage：持久化存储 UI 状态
--   Environment：设备环境查询
+-   AppStorage：应用全局的 UI 状态存储 -》 单向: @StorageProp 双向: @StorageLink
+-   PersistentStorage:全局持久化状态（磁盘-持久化状态，退出应用数据同样存在）,**与 AppStorage 搭配使用**
+-   Environment:应用程序运行的设备的环境参数（可读不可写）,**与 AppStorage 搭配使用**
+
+### 其他状态管理功能
+
+    @Watch：用于监听状态变量的变化
+
+    $$ 运算符：给内置组件提供TS变量的引用，使得TS变量和内置组件的内部状态保持同步。
+
+    @Track：应用于class对象的属性级更新。@Track装饰的属性变化时，只会触发该属性关联的Ul更新。
 
 ### UIAbility 组件的启动模式
 
@@ -164,3 +185,6 @@ description: hos Question
 ### TaskPool 里面是否可以使用 EventHub
 
     目前EventHub只能在主线程使用，不支持在TaskPool中使用。
+
+$$
+$$
