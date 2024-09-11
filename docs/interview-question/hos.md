@@ -17,19 +17,23 @@ description: hos Question
 ### 生命周期
 
 -   页面的生命周期(3+2)
+
     -   onPageShow:页面显示触发(页面特有)
     -   onPageHide：页面隐藏触发(页面特有)
     -   onBackPress：当用户点击返回按钮时触发(页面特有)
-    -   aboutToAppear：组件即将出现时触发
-    -   aboutToDisappear：组件即将析构销毁时触发
+
 -   组件的生命周期(2)
+
     -   aboutToAppear：组件即将出现时触发
     -   aboutToDisappear：组件即将析构销毁时触发
+
 -   UIAbility 组件生命周期函数
+
     -   onCreate: UIAbility 实例创建完成时触发
     -   onForeground: 在 UIAbility 的 UI 可见之前
     -   onBackground: 在 UIAbility 的 UI 完全不可见之后
     -   onDestroy: 在 UIAbility 实例销毁时触发
+
 -   WindowStage 窗口生命周期函数
 
     -   onWindowStageCreate 窗口才能构建

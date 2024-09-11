@@ -448,12 +448,13 @@ console.log(g()); // 3
     console.log(2 instanceof Number); // false
     console.log(true instanceof Boolean); // false
     console.log("str" instanceof String); // false
+
     console.log([] instanceof Array); // true
     console.log(function () {} instanceof Function); // true
     console.log({} instanceof Object); // true
     ```
 
-    可以看到，instanceof 只能正确判断引用数据类型，而不能判断基本数据类型。instanceof 运算符可以用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性。
+    可以看到，instanceof 只能正确判断引用数据类型，而不能判断基本数据类型、null、undefind。instanceof 运算符可以用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性。
 
 -   通过 constructor 判断
 

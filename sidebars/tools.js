@@ -15,7 +15,7 @@ const tools = [
             description: "Let's learn Brew!",
             keywords: ["brew"],
         },
-        items: ["tools/brew/brew_cmd"],
+        items: ["tools/brew/brew_cmd", "tools/brew/zsh_theme"],
     },
     {
         type: "category",
@@ -57,5 +57,5 @@ const tools = [
         },
         items: ["tools/editor/idea&vscode"],
     },
-]
+];
 module.exports = tools;
